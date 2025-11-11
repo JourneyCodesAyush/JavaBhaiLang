@@ -1,0 +1,10 @@
+# Java
+*.class
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# Others
+.DS_Store
