@@ -33,7 +33,12 @@ public class Token {
     public String toString() {
         String displayLexeme = (lexeme == null || lexeme.isEmpty()) ? "<none>" : lexeme;
         String displayLiteral = (literal == null) ? "<null>" : literal.toString();
-        return type + " " + displayLexeme + " " + displayLiteral;
+        return String.format(
+                "Type: %-15s Lexeme: %-20s Literal: %-15s Line: %d",
+                type.toString(),
+                displayLexeme,
+                displayLiteral,
+                line);
     }
 
 }
