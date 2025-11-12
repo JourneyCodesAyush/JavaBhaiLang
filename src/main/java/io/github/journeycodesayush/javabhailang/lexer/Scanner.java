@@ -63,26 +63,22 @@ public class Scanner {
     }
 
     private char peek() {
-        if (isAtEnd()) {
+        if (isAtEnd())
             return '\0';
-        }
         return source.charAt(current);
     }
 
     private char peekNext() {
         if (current + 1 >= source.length())
             return '\0';
-
         return source.charAt(current + 1);
     }
 
     private boolean match(char expected) {
-        if (isAtEnd()) {
+        if (isAtEnd())
             return false;
-        }
-        if (source.charAt(current) != expected) {
+        if (source.charAt(current) != expected)
             return false;
-        }
         current++;
         return true;
     }
@@ -92,12 +88,14 @@ public class Scanner {
     }
 
     private void addToken(TokenType type, String lexeme, Object literal) {
-        tokens.add(new Token(type, lexeme, literal, line));
+        if (lexeme == null || lexeme.isBlank())
+            return;
+        tokens.add(new Token(type, lexeme.trim(), literal, line));
     }
 
     private void addToken(TokenType type, Object literal) {
         String text = source.substring(start, current);
-        tokens.add(new Token(type, text, literal, line));
+        tokens.add(new Token(type, text.trim(), literal, line));
     }
 
     private void scanToken() {
@@ -109,134 +107,104 @@ public class Scanner {
         }
 
         switch (c) {
-            case '(':
-                addToken(LEFT_PAREN);
-                break;
-            case ')':
-                addToken(RIGHT_PAREN);
-                break;
-            case '{':
-                addToken(LEFT_CURLY_BRACE);
-                break;
-            case '}':
-                addToken(RIGHT_CURLY_BRACE);
-                break;
-            case ',':
-                addToken(COMMA);
-                break;
-            case '.':
-                addToken(DOT);
-                break;
-            case ';':
-                addToken(SEMICOLON);
-                break;
-            case '+':
-                addToken(PLUS);
-                break;
-            case '-':
-                addToken(MINUS);
-                break;
-            case '*':
-                addToken(STAR);
-                break;
-            case '!':
-                addToken(match('=') ? BANG_EQUAL : BANG);
-                break;
-            case '=':
-                addToken(match('=') ? EQUAL_EQUAL : EQUAL);
-                break;
-            case '>':
-                addToken(match('=') ? GREATER_EQUAL : GREATER);
-                break;
-            case '<':
-                addToken(match('=') ? LESS_EQUAL : LESS);
-                break;
-            case '/':
+            case '(' -> addToken(LEFT_PAREN);
+            case ')' -> addToken(RIGHT_PAREN);
+            case '{' -> addToken(LEFT_CURLY_BRACE);
+            case '}' -> addToken(RIGHT_CURLY_BRACE);
+            case ',' -> addToken(COMMA);
+            case '.' -> addToken(DOT);
+            case ';' -> addToken(SEMICOLON);
+            case '+' -> addToken(PLUS);
+            case '-' -> addToken(MINUS);
+            case '*' -> addToken(STAR);
+            case '!' -> addToken(match('=') ? BANG_EQUAL : BANG);
+            case '=' -> addToken(match('=') ? EQUAL_EQUAL : EQUAL);
+            case '>' -> addToken(match('=') ? GREATER_EQUAL : GREATER);
+            case '<' -> addToken(match('=') ? LESS_EQUAL : LESS);
+            case '/' -> {
                 if (match('/')) {
-                    while (!isAtEnd() && peek() != '\n') {
-                        advance();
+                    if (wordBuffer.length() > 0) {
+                        processWord(wordBuffer.toString());
+                        wordBuffer.setLength(0);
                     }
-                } else {
+                    while (!isAtEnd() && peek() != '\n')
+                        advance();
+                } else
                     addToken(SLASH);
-                }
-                break;
-            case '&':
+            }
+            case '&' -> {
                 if (match('&'))
                     addToken(LOGICAL_AND);
                 else
                     BhaiLang.error(line, "Unexpected character '&'. Use '&&' for logical AND.");
-                break;
-            case '|':
+            }
+            case '|' -> {
                 if (match('|'))
                     addToken(LOGICAL_OR);
                 else
                     BhaiLang.error(line, "Unexpected character '|'. Use '||' for logical OR.");
-                break;
-            case ' ':
-            case '\t':
-                // Ignore blank spaces
-                break;
-
-            case '\r':
-            case '\n':
+            }
+            case ' ', '\t', '\r' -> {
+            }
+            case '\n' -> {
                 if (wordBuffer.length() > 0) {
                     processWord(wordBuffer.toString());
                     wordBuffer.setLength(0);
                 }
                 line++;
-                break;
-
-            case '"':
-                string();
-                break;
-
-            default:
-                if (isDigit(c)) {
+            }
+            case '"' -> string();
+            default -> {
+                if (isDigit(c))
                     number();
-                } else if (isAlphaNumeric(c)) {
-                    // identifier();
+                else if (isAlphaNumeric(c))
                     wordBuffer.append(c);
-                } else {
+                else
                     BhaiLang.error(line, "Unexpected character.");
-                }
-                break;
+            }
         }
     }
 
     private void processWord(String word) {
         word = word.trim();
-        List<String> matchedKey = null;
+        if (word.isEmpty())
+            return;
+
+        // Multi-word keywords
         for (List<String> keyList : multiKeywords.keySet()) {
             if (keyList.get(0).equals(word)) {
-                matchedKey = keyList;
-                break;
-            }
-        }
+                List<String> collected = new ArrayList<>();
+                collected.add(word);
+                boolean matchFailed = false;
 
-        if (matchedKey != null) {
-            List<String> collected = new ArrayList<>();
-            collected.add(word);
-            for (int i = 1; i < matchedKey.size(); i++) {
-                String nextWord = readNextWord().trim();
-                if (!nextWord.equals(matchedKey.get(i))) {
-                    // addToken(IDENTIFIER, collected.get(0));
-                    for (String w : collected) {
-                        addToken(IDENTIFIER, w.trim());
+                for (int i = 1; i < keyList.size(); i++) {
+                    String nextWord = readNextWord();
+                    if (nextWord == null || nextWord.isEmpty() || !nextWord.equals(keyList.get(i))) {
+                        matchFailed = true;
+                        if (nextWord != null && !nextWord.isEmpty()) {
+                            wordBuffer.setLength(0);
+                            wordBuffer.append(nextWord);
+                        }
+                        break;
                     }
-                    wordBuffer.setLength(0);
-                    for (char ch : nextWord.toCharArray()) {
-                        wordBuffer.append(ch);
-                    }
-                    // wordBuffer.append(nextWord);
-                    return;
+                    collected.add(nextWord);
                 }
-                collected.add(nextWord.trim());
+
+                if (matchFailed) {
+                    for (String w : collected) {
+                        if (w != null && !w.isBlank())
+                            addToken(IDENTIFIER, null);
+                    }
+                } else {
+                    if (!collected.isEmpty()) {
+                        addToken(multiKeywords.get(keyList), String.join(" ", collected), null);
+                    }
+                }
+                return;
             }
-            addToken(multiKeywords.get(matchedKey), String.join(" ", collected), null);
-            return;
         }
 
-        // Single keyword
+        // Single-word keywords
         TokenType type = keywords.get(word);
         if (type == BOOLEAN && word.equals("sahi"))
             addToken(type, word.trim(), true);
@@ -244,23 +212,22 @@ public class Scanner {
             addToken(type, word.trim(), false);
         else if (type == NALLA && word.equals("nalla"))
             addToken(type, word.trim(), null);
-        else
-            addToken(IDENTIFIER, word.trim());
-
+        else if (!word.isBlank())
+            addToken(IDENTIFIER, word.trim(), null);
     }
 
     private String readNextWord() {
         while (!isAtEnd() && isWhiteSpace(peek())) {
-            if (peek() == '\n') {
+            if (peek() == '\n')
                 line++;
-            }
             advance();
         }
         int wordStart = current;
-        while (!isAtEnd() && isAlphaNumeric(peek())) {
+        while (!isAtEnd() && isAlphaNumeric(peek()))
             advance();
-        }
-        return source.substring(wordStart, current).trim();
+
+        String nextWord = source.substring(wordStart, current).trim();
+        return nextWord.isEmpty() ? null : nextWord;
     }
 
     private void string() {
@@ -269,12 +236,10 @@ public class Scanner {
                 line++;
             advance();
         }
-
         if (isAtEnd()) {
             BhaiLang.error(line, "Unterminated string.");
             return;
         }
-
         advance();
         String value = source.substring(start + 1, current - 1);
         addToken(STRING, value);
@@ -297,15 +262,12 @@ public class Scanner {
     }
 
     private void number() {
-        while (isDigit(peek())) {
+        while (isDigit(peek()))
             advance();
-        }
-
         if (peek() == '.' && isDigit(peekNext())) {
             advance();
-            while (isDigit(peek())) {
+            while (isDigit(peek()))
                 advance();
-            }
         }
         addToken(NUMBER, Double.parseDouble(source.substring(start, current)));
     }
