@@ -170,6 +170,14 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         return null;
     }
 
+    @Override
+    public Void visitWhileStmt(Stmt.While stmt) {
+        while (isTruthy(stmt.condition)) {
+            execute(stmt.body);
+        }
+        return null;
+    }
+
     private void executeBlock(List<Stmt> statements, Environment environment) {
         Environment previous = this.environment;
         try {
