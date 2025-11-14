@@ -1,5 +1,7 @@
 package io.github.journeycodesayush.javabhailang.interpreter;
 
+import static io.github.journeycodesayush.javabhailang.lexer.TokenType.LOGICAL_OR;
+
 import java.util.List;
 
 import io.github.journeycodesayush.javabhailang.BhaiLang;
@@ -29,6 +31,19 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Object visitLiteralExpr(Expr.Literal expr) {
         return expr.value;
+    }
+
+    @Override
+    public Object visitLogicalExpr(Expr.Logical expr) {
+        Object left = evaluate(expr.left);
+        if (expr.operator.getType() == LOGICAL_OR) {
+            if (isTruthy(left))
+                return left;
+        } else {
+            if (!isTruthy(left))
+                return left;
+        }
+        return evaluate(expr.right);
     }
 
     @Override
