@@ -52,12 +52,29 @@ public class Parser {
     }
 
     private Stmt statement() {
+        if (match(AGAR_BHAI)) {
+            return ifStatement();
+        }
         if (match(BOL_BHAI)) {
             return printStatement();
         }
         if (match(LEFT_CURLY_BRACE))
             return new Stmt.Block(block());
         return expressionStatement();
+    }
+
+    private Stmt ifStatement() {
+        consume(LEFT_PAREN, "Expect '(' after 'if' condition");
+        Expr condition = expression();
+        consume(RIGHT_PAREN, "Expect ')' after if condition.");
+
+        Stmt thenBranch = statement();
+        Stmt elseBranch = null;
+        if (match(WARNA_BHAI)) {
+            elseBranch = statement();
+        }
+
+        return new Stmt.If(condition, thenBranch, elseBranch);
     }
 
     private Stmt printStatement() {
