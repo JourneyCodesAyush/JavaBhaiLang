@@ -58,9 +58,21 @@ public class Parser {
         if (match(BOL_BHAI)) {
             return printStatement();
         }
+        if (match(JAB_TAK_BHAI)) {
+            return whileStatement();
+        }
         if (match(LEFT_CURLY_BRACE))
             return new Stmt.Block(block());
         return expressionStatement();
+    }
+
+    private Stmt whileStatement() {
+        consume(LEFT_PAREN, "Expect a '(' after 'jab tak bhai'.");
+        Expr condition = expression();
+        consume(RIGHT_PAREN, "Expect a ')' after condition.");
+        Stmt body = statement();
+
+        return new Stmt.While(condition, body);
     }
 
     private Stmt ifStatement() {
