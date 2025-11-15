@@ -1,0 +1,27 @@
+name: "⚙️ Code Enhancement / Refactor"
+description: Suggest improvements or refactoring for JavaBhaiLang codebase
+labels: [enhancement, refactor]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Got an idea for improving the codebase of **JavaBhaiLang**?  
+        Whether it's refactoring a function, improving readability, or optimizing performance, share your thoughts below.
+
+  - type: textarea
+    id: enhancement-summary
+    attributes:
+      label: Enhancement Summary
+      placeholder: "Refactor the lexer to support more flexible token patterns"
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Why and How?
+      placeholder: |
+        Why is this enhancement needed?  
+        What changes do you suggest, and how should they improve the project?
+    validations:
+      required: true

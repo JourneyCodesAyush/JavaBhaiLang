@@ -1,0 +1,62 @@
+name: "🚀 Feature Request"
+description: Suggest a new feature or improvement for JavaBhaiLang
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Got a cool idea for **JavaBhaiLang**?  
+        New syntax? New built-in? Better interpreter behavior?  
+        Drop your proposal below — Bhai loves chaos, but structured chaos is even better 😎.
+
+  - type: input
+    id: title
+    attributes:
+      label: Feature Summary
+      placeholder: "Add 'bas kar bhai' (break) support"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What should this feature do?
+      placeholder: |
+        Describe the feature, how it should work,
+        and why it makes Bhai Lang more powerful or fun.
+    validations:
+      required: true
+
+  - type: textarea
+    id: example
+    attributes:
+      label: Example Bhai Lang Code (optional but helpful)
+      placeholder: |
+        Provide a short example of how the syntax or feature would look.
+        Example:
+        jab tak bhai (a < 10) {
+          a += 1;
+          agar bhai (a == 5)
+          { 
+            bas kar bhai;
+          }
+        }
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      placeholder: |
+        Any related issues, motivations, or reference features from other languages.
+
+  - type: checkboxes
+    id: feature_type
+    attributes:
+      label: What part of the interpreter does this affect?
+      options:
+        - label: Lexer (token definitions)
+        - label: Parser (grammar / AST)
+        - label: Interpreter (runtime behavior)
+        - label: Built-in functions / keywords
+        - label: Examples / documentation
+        - label: Other

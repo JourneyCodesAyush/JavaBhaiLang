@@ -1,0 +1,28 @@
+name: "❓ Question / Help"
+description: Ask a question or request guidance on using JavaBhaiLang
+labels: [question]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Got a question or need help with **JavaBhaiLang**?  
+        Drop your query here, and we'll try to help! If you need clarification, let us know.
+
+  - type: input
+    id: summary
+    attributes:
+      label: Question Summary
+      placeholder: "How do I use 'jab tak bhai' loops in Bhai Lang?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      placeholder: |
+        What are you trying to do? What have you already tried?
+        Please provide any relevant error messages, logs, or code examples.
+        Screenshots are welcome.
+    validations:
+      required: true

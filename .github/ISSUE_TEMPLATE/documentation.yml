@@ -1,0 +1,26 @@
+name: "🔧 Documentation Issue"
+description: Report an issue with the documentation or suggest improvements
+labels: [documentation]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Found something unclear, missing, or incorrect in the documentation?  
+        Let us know here, and we'll update it for clarity or accuracy.
+
+  - type: textarea
+    id: documentation-issue
+    attributes:
+      label: Documentation Issue Summary
+      placeholder: "The 'Variables' section is missing explanation on types"
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Details or Suggested Fix
+      placeholder: |
+        Describe the problem or suggest how the documentation can be improved.
+    validations:
+      required: true

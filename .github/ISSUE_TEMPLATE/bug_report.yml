@@ -1,0 +1,78 @@
+name: "🐛 Bug Report"
+description: Report something in JavaBhaiLang that isn't working as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug in **JavaBhaiLang**!  
+        Fill out this form so we can recreate the issue and fix it quickly.  
+        Bhai will do his best to behave… eventually 😅.
+
+  - type: input
+    id: title
+    attributes:
+      label: Short Summary
+      placeholder: "Interpreter crashes when using 'agar bhai' with nested blocks"
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      placeholder: |
+        Describe what you did, what happened, and what you expected.
+        Include error messages if any.
+      description: |
+        Logs, code snippets, and screenshots help a lot. Drag & drop them below.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      placeholder: |
+        1. Run run_bhai_lang.py
+        2. Enter: 'bhai ye hai a = 10;'
+        3. Enter an 'agar bhai' block
+        4. Interpreter crashes with <error>
+
+  - type: textarea
+    id: code
+    attributes:
+      label: Minimal Bhai Lang Code Example
+      placeholder: |
+        Paste the shortest code snippet that triggers the bug.
+        Example:
+        agar bhai (10 < 20) {
+          bol bhai "ok";
+        }
+
+  - type: input
+    id: java-version
+    attributes:
+      label: Java Version
+      placeholder: "17 / 21 / etc."
+
+  - type: input
+    id: python-version
+    attributes:
+      label: Python Version
+      placeholder: "3.10 / 3.11"
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      placeholder: "Windows 11 / macOS Ventura / Ubuntu 22.04"
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I'm using the latest version of the repository
+        - label: I checked the README and Known Limitations
+        - label: I included error logs or screenshots if available
