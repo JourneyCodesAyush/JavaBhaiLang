@@ -1,9 +1,9 @@
 # 🖥️ JavaBhaiLang Interpreter
 
-![Java](https://img.shields.io/badge/Java-17-orange)  
-![Python](https://img.shields.io/badge/Python-3.10-blue)  
-![License](https://img.shields.io/badge/license-MIT-green)  
-![Status](https://img.shields.io/badge/status-active-brightgreen)  
+![Java](https://img.shields.io/badge/Java-17-orange)
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Status](https://img.shields.io/badge/status-active-brightgreen)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue)
 
 ---
@@ -132,13 +132,13 @@ bhai ye hai null_value = nalla;
 Use `bol bhai` to print anything to console
 
 ```bash
-      bol bhai "Hello World";
-      bhai ye hai a = 10;
-      {
-            bhai ye hai b = 20;
-            bol bhai a + b;
-      }
-      bhai "sahi hai bhai";
+bol bhai "Hello World";
+bhai ye hai a = 10;
+{
+      bhai ye hai b = 20;
+      bol bhai a + b;
+}
+bhai "sahi hai bhai";
 ```
 
 ### Conditionals
@@ -147,12 +147,12 @@ This interpreter supports `agar bhai` and `warna bhai` as if-else ladder.
 Does not support `if-else-if` ladder as of now though the syntax is defined.
 
 ```bash
-      bhai ye hai a = 10;
-      agar bhai (a < 20) {
-            bol bhai "a is less than 20";
-      } warna bhai {
-            bol bhai "a is greater than or equal to 25";
-      }
+bhai ye hai a = 10;
+agar bhai (a < 20) {
+      bol bhai "a is less than 20";
+} warna bhai {
+      bol bhai "a is greater than or equal to 25";
+}
 ```
 
 ### Loops
@@ -161,18 +161,18 @@ The statements inside `jab tak bhai` are executed until the condition is evaluat
 The moment condition turns `galat`, loop terminates.
 
 ```bash
-      bhai ye hai a = 0;
-      jab tak bhai (a < 10) {
-            a += 1;
-            agar bhai (a == 5) {
-                  bol bhai "andar se bol bhai 5";
-            }
-            agar bhai (a == 6) {
-                  bol bhai "andar se bol bhai 6";
-            }
-            bol bhai a;
+bhai ye hai a = 0;
+jab tak bhai (a < 10) {
+      a = a + 1;
+      agar bhai (a == 5) {                  
+            bol bhai "andar se bol bhai 5";
       }
-      bol bhai "done";
+      agar bhai (a == 6) {
+            bol bhai "andar se bol bhai 6";
+      }
+      bol bhai a;
+}
+bol bhai "done";
 ```
 
 ---
@@ -191,6 +191,8 @@ The moment condition turns `galat`, loop terminates.
 
 - `if-else-if` ladder is partially implemented
 - No standard library except built-in print (`bol bhai`)
+- Comma-separated values not implemented in the built-in print (`bol bhai`)
+- Complex assignment operators not implemented (`+=`, `-=`, `*=`, `/=`)
 - Only single-file execution via `run_bhai_lang.py`
 - `bas kar bhai` and `agla dekh bhai` are yet to be implemented
 
