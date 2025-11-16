@@ -33,7 +33,7 @@ Security vulnerabilities should be reported privately.
 
 ### 2. **Contact the maintainer directly**
 
-Email: **journeycodesayush@gmail.com**  
+Email: **journeycodes.ayush@gmail.com**  
 (or use contact info on the GitHub profile)
 
 Include:
