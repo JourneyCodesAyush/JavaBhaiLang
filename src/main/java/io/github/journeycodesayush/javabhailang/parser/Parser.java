@@ -9,17 +9,51 @@ import io.github.journeycodesayush.javabhailang.BhaiLang;
 import io.github.journeycodesayush.javabhailang.lexer.Token;
 import io.github.journeycodesayush.javabhailang.lexer.TokenType;
 
+/**
+ * Parses a list of {@link io.github.journeycodesayush.javabhailang.lexer.Token}
+ * objects
+ * into an abstract syntax tree (AST) composed of {@link Stmt} and {@link Expr}
+ * nodes.
+ * <p>
+ * Implements a recursive descent parser with support for:
+ * </p>
+ * <ul>
+ * <li>Variable declarations</li>
+ * <li>Expressions (arithmetic, logical, comparison)</li>
+ * <li>Control flow statements (if, while)</li>
+ * <li>Print statements</li>
+ * <li>Blocks</li>
+ * </ul>
+ */
 public class Parser {
+
+    /**
+     * A runtime exception representing a parsing error.
+     */
     private static class ParseError extends RuntimeException {
     }
 
+    /** The list of tokens to parse. */
     private final List<Token> tokens;
+
+    /** Current position in the token list. */
     private int current = 0;
 
+    /**
+     * Constructs a parser for the given list of tokens.
+     *
+     * @param tokens the list of tokens to parse
+     */
     public Parser(List<Token> tokens) {
         this.tokens = tokens;
     }
 
+    /**
+     * Parses the token list and returns a list of statements representing the
+     * program.
+     *
+     * @return list of {@link Stmt} objects
+     */
     public List<Stmt> parse() {
         List<Stmt> statements = new ArrayList<>();
         while (!isAtEnd()) {
@@ -28,6 +62,11 @@ public class Parser {
         return statements;
     }
 
+    /**
+     * Parses a declaration (variable declaration or statement).
+     *
+     * @return a {@link Stmt} node
+     */
     private Stmt declaration() {
         try {
             if (match(BHAI_YE_HAI))
@@ -40,6 +79,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a variable declaration.
+     *
+     * @return a {@link Stmt.Var} representing the variable declaration
+     */
     private Stmt varDeclaration() {
         Token name = consume(IDENTIFIER, "Expect variable name.");
 
@@ -51,6 +95,11 @@ public class Parser {
         return new Stmt.Var(name, initializer);
     }
 
+    /**
+     * Parses a statement (if, while, print, block, or expression).
+     *
+     * @return a {@link Stmt} object representing the statement
+     */
     private Stmt statement() {
         if (match(AGAR_BHAI)) {
             return ifStatement();
@@ -66,6 +115,11 @@ public class Parser {
         return expressionStatement();
     }
 
+    /**
+     * Parses a while loop statement.
+     *
+     * @return a {@link Stmt.While} object representing the loop
+     */
     private Stmt whileStatement() {
         consume(LEFT_PAREN, "Expect a '(' after 'jab tak bhai'.");
         Expr condition = expression();
@@ -75,6 +129,11 @@ public class Parser {
         return new Stmt.While(condition, body);
     }
 
+    /**
+     * Parses an if statement, including optional else branch.
+     *
+     * @return a {@link Stmt.If} object representing the if statement
+     */
     private Stmt ifStatement() {
         consume(LEFT_PAREN, "Expect '(' after 'if' condition");
         Expr condition = expression();
@@ -89,18 +148,33 @@ public class Parser {
         return new Stmt.If(condition, thenBranch, elseBranch);
     }
 
+    /**
+     * Parses a print statement.
+     *
+     * @return a {@link Stmt.Print} object representing the print statement
+     */
     private Stmt printStatement() {
         Expr value = expression();
         consume(SEMICOLON, "Expect ';' after value.");
         return new Stmt.Print(value);
     }
 
+    /**
+     * Parses a standalone expression statement.
+     *
+     * @return a {@link Stmt.Expression} object
+     */
     private Stmt expressionStatement() {
         Expr expr = expression();
         consume(SEMICOLON, "Expect ';'after value.");
         return new Stmt.Expression(expr);
     }
 
+    /**
+     * Parses a block of statements enclosed in curly braces.
+     *
+     * @return a list of {@link Stmt} objects inside the block
+     */
     private List<Stmt> block() {
         List<Stmt> statements = new ArrayList<>();
 
@@ -112,18 +186,38 @@ public class Parser {
         return statements;
     }
 
+    /**
+     * Returns the current token without consuming it.
+     *
+     * @return the current {@link Token}
+     */
     private Token peek() {
         return tokens.get(current);
     }
 
+    /**
+     * Checks whether we have reached the end of the token list.
+     *
+     * @return true if at the end, false otherwise
+     */
     private boolean isAtEnd() {
         return peek().getType() == EOF;
     }
 
+    /**
+     * Returns the previous token.
+     *
+     * @return the previous {@link Token}
+     */
     private Token previous() {
         return tokens.get(current - 1);
     }
 
+    /**
+     * Advances to the next token and returns the previous one.
+     *
+     * @return the previous {@link Token}
+     */
     private Token advance() {
         if (!isAtEnd()) {
             current++;
@@ -131,6 +225,13 @@ public class Parser {
         return previous();
     }
 
+    /**
+     * Checks if the current token matches any of the given types.
+     * Advances if a match is found.
+     *
+     * @param types one or more {@link TokenType} to match
+     * @return true if matched, false otherwise
+     */
     private boolean match(TokenType... types) {
         for (TokenType type : types) {
             if (check(type)) {
@@ -141,6 +242,12 @@ public class Parser {
         return false;
     }
 
+    /**
+     * Checks if the current token is of the given type without consuming it.
+     *
+     * @param type the {@link TokenType} to check
+     * @return true if it matches, false otherwise
+     */
     private boolean check(TokenType type) {
         if (isAtEnd()) {
             return false;
@@ -148,10 +255,20 @@ public class Parser {
         return peek().getType() == type;
     }
 
+    /**
+     * Parses an expression starting point.
+     *
+     * @return a {@link Expr} object
+     */
     private Expr expression() {
         return assignment();
     }
 
+    /**
+     * Parses an assignment expression.
+     *
+     * @return a {@link Expr} representing the assignment
+     */
     private Expr assignment() {
         Expr expr = logical_or();
 
@@ -169,6 +286,11 @@ public class Parser {
         return expr;
     }
 
+    /**
+     * Parses logical OR expressions.
+     *
+     * @return a {@link Expr.Logical} or nested expression
+     */
     private Expr logical_or() {
         Expr expr = logical_and();
         while (match(LOGICAL_OR)) {
@@ -180,6 +302,11 @@ public class Parser {
         return expr;
     }
 
+    /**
+     * Parses logical AND expressions.
+     *
+     * @return a {@link Expr.Logical} or nested expression
+     */
     private Expr logical_and() {
         Expr expr = equality();
         while (match(LOGICAL_AND)) {
@@ -190,6 +317,11 @@ public class Parser {
         return expr;
     }
 
+    /**
+     * Parses equality expressions (==, !=).
+     *
+     * @return a {@link Expr.Binary} or nested expression
+     */
     private Expr equality() {
         Expr expr = comparison();
 
@@ -201,6 +333,11 @@ public class Parser {
         return expr;
     }
 
+    /**
+     * Parses comparison expressions (<, <=, >, >=).
+     *
+     * @return a {@link Expr.Binary} or nested expression
+     */
     private Expr comparison() {
         Expr expr = term();
 
@@ -212,6 +349,11 @@ public class Parser {
         return expr;
     }
 
+    /**
+     * Parses addition and subtraction expressions.
+     *
+     * @return a {@link Expr.Binary} or nested expression
+     */
     private Expr term() {
         Expr expr = factor();
 
@@ -223,6 +365,11 @@ public class Parser {
         return expr;
     }
 
+    /**
+     * Parses multiplication and division expressions.
+     *
+     * @return a {@link Expr.Binary} or nested expression
+     */
     private Expr factor() {
         Expr expr = unary();
 
@@ -234,6 +381,11 @@ public class Parser {
         return expr;
     }
 
+    /**
+     * Parses unary expressions (!, -).
+     *
+     * @return a {@link Expr.Unary} or nested expression
+     */
     private Expr unary() {
         if (match(BANG, MINUS)) {
             Token operator = previous();
@@ -243,6 +395,11 @@ public class Parser {
         return primary();
     }
 
+    /**
+     * Parses primary expressions: literals, variables, or grouped expressions.
+     *
+     * @return an {@link Expr} representing the primary expression
+     */
     private Expr primary() {
         if (match(BOOLEAN))
             return new Expr.Literal(previous().getLiteral());
@@ -265,17 +422,34 @@ public class Parser {
         throw error(peek(), "Expect expression.");
     }
 
+    /**
+     * Consumes a token of the expected type or throws an error.
+     *
+     * @param type    expected {@link TokenType}
+     * @param message error message if type doesn't match
+     * @return the consumed {@link Token}
+     */
     private Token consume(TokenType type, String message) {
         if (check(type))
             return advance();
         throw error(peek(), message);
     }
 
+    /**
+     * Reports a parse error at a token.
+     *
+     * @param token   the {@link Token} at which error occurred
+     * @param message error message
+     * @return a {@link ParseError} object
+     */
     private ParseError error(Token token, String message) {
         BhaiLang.error(token, message);
         return new ParseError();
     }
 
+    /**
+     * Synchronizes the parser after a parse error to continue parsing.
+     */
     private void synchronize() {
         advance();
 

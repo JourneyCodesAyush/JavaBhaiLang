@@ -8,10 +8,29 @@ import io.github.journeycodesayush.javabhailang.BhaiLang;
 import io.github.journeycodesayush.javabhailang.lexer.Token;
 import io.github.journeycodesayush.javabhailang.parser.*;
 
+/**
+ * The core interpreter for BhaiLang programs.
+ * <p>
+ * Implements the visitor interfaces for {@link Expr} and {@link Stmt} AST
+ * nodes.
+ * Responsible for executing statements and evaluating expressions in a given
+ * {@link Environment}, handling runtime errors, and supporting control flow.
+ * </p>
+ */
 public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
+    /** The current environment for variable storage and scope resolution. */
     private Environment environment = new Environment();
 
+    /**
+     * Interprets a list of statements.
+     * <p>
+     * Executes each statement in order and handles any runtime or null-pointer
+     * exceptions.
+     * </p>
+     *
+     * @param statements the list of {@link Stmt} nodes to execute
+     */
     public void interpret(List<Stmt> statements) {
         try {
             for (Stmt statement : statements) {
@@ -24,6 +43,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
     }
 
+    /**
+     * Executes a single statement by accepting the statement visitor.
+     *
+     * @param stmt the {@link Stmt} to execute
+     */
     private void execute(Stmt stmt) {
         stmt.accept(this);
     }
@@ -178,6 +202,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         return null;
     }
 
+    /**
+     * Executes a block of statements in a new environment.
+     *
+     * @param statements  the list of statements to execute
+     * @param environment the environment in which the block executes
+     */
     private void executeBlock(List<Stmt> statements, Environment environment) {
         Environment previous = this.environment;
         try {
@@ -192,6 +222,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
     }
 
+    /**
+     * Determines the truthiness of a value for conditional expressions.
+     *
+     * @param object the value to test
+     * @return true if the value is considered truthy, false otherwise
+     */
     private boolean isTruthy(Object object) {
         if (object == null) {
             return false;
@@ -202,6 +238,13 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         return true;
     }
 
+    /**
+     * Checks equality between two values.
+     *
+     * @param a first value
+     * @param b second value
+     * @return true if both are equal, false otherwise
+     */
     private boolean isEqual(Object a, Object b) {
         if (a == null && b == null)
             return true;
@@ -211,6 +254,14 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         return a.equals(b);
     }
 
+    /**
+     * Ensures that an operand is a number.
+     *
+     * @param operator the operator token
+     * @param operand  the operand to check
+     * @throws RuntimeError if the operand is not a number
+     */
+
     private void checkNumberOperand(Token operator, Object operand) {
         if (operand instanceof Double) {
             return;
@@ -219,6 +270,15 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         throw new RuntimeError(operator, "Operand must be a number.");
     }
 
+    /**
+     * Ensures that both operands are numbers.
+     *
+     * @param operator the operator token
+     * @param left     the left operand
+     * @param right    the right operand
+     * @throws RuntimeError          if any operand is not a number
+     * @throws NallaPointerException if any operand is null
+     */
     private void checkNumberOperands(Token operator, Object left, Object right) {
         if (left instanceof Double && right instanceof Double) {
             return;
@@ -228,6 +288,13 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
         throw new RuntimeError(operator, "Operands must be numbers.");
     }
+
+    /**
+     * Converts a value to a string for printing.
+     *
+     * @param object the value to convert
+     * @return string representation of the value
+     */
 
     private String stringify(Object object) {
         if (object == null)
@@ -242,6 +309,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         return object.toString();
     }
 
+    /**
+     * Evaluates an expression by accepting the expression visitor.
+     *
+     * @param expr the {@link Expr} to evaluate
+     * @return the result of evaluating the expression
+     */
     private Object evaluate(Expr expr) {
         return expr.accept(this);
     }

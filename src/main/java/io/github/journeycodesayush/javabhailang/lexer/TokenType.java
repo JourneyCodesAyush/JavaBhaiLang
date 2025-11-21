@@ -1,27 +1,100 @@
 package io.github.journeycodesayush.javabhailang.lexer;
 
+/**
+ * Represents all the types of tokens in BhaiLang.
+ * <p>
+ * Used by the lexer and parser to classify each token in the source code.
+ * </p>
+ */
 public enum TokenType {
 
     // Single-character tokens
-    LEFT_CURLY_BRACE, RIGHT_CURLY_BRACE,
-    LEFT_PAREN, RIGHT_PAREN, SEMICOLON, PLUS, MINUS, STAR, SLASH, DOT, COMMA,
+    /** { character */
+    LEFT_CURLY_BRACE,
+    /** } character */
+    RIGHT_CURLY_BRACE,
+    /** ( character */
+    LEFT_PAREN,
+    /** ) character */
+    RIGHT_PAREN,
+    /** ; character */
+    SEMICOLON,
+    /** + character */
+    PLUS,
+    /** - character */
+    MINUS,
+    /** * character */
+    STAR,
+    /** / character */
+    SLASH,
+    /** . character */
+    DOT,
+    /** , character */
+    COMMA,
 
     // One or two character tokens
-    BANG, BANG_EQUAL, EQUAL, EQUAL_EQUAL, GREATER, GREATER_EQUAL, LESS, LESS_EQUAL, LOGICAL_AND, LOGICAL_OR,
+    /** ! character */
+    BANG,
+    /** != characters */
+    BANG_EQUAL,
+    /** = character */
+    EQUAL,
+    /** == characters */
+    EQUAL_EQUAL,
+    /** &lt; character */
+    GREATER,
+    /** &lt;= characters */
+    GREATER_EQUAL,
+    /** &gt; character */
+    LESS,
+    /** &gt;= characters */
+    LESS_EQUAL,
+    /** &amp;&amp; characters */
+    LOGICAL_AND,
+    /** || characters */
+    LOGICAL_OR,
 
     // Identifier, Literal, String, Number
-    IDENTIFIER, STRING, BOOLEAN, NUMBER,
+    /** Identifiers (variable names) */
+    IDENTIFIER,
+    /** String literals */
+    STRING,
+    /** Boolean literals (sahi, galat) */
+    BOOLEAN,
+    /** Numeric literals */
+    NUMBER,
 
-    // Keyword
-    HI_BHAI, BYE_BHAI,
-    BOL_BHAI, BHAI_YE_HAI,
-    AGAR_BHAI, WARNA_BHAI, NAHI_TO_BHAI,
-    JAB_TAK_BHAI, BAS_KAR_BHAI, AGLA_DEKH_BHAI,
-    SAHI, GALAT,
+    // Keywords
+    /** hi bhai keyword */
+    HI_BHAI,
+    /** bye bhai keyword */
+    BYE_BHAI,
+    /** bol bhai keyword for printing */
+    BOL_BHAI,
+    /** bhai ye hai keyword for variable declaration */
+    BHAI_YE_HAI,
+    /** agar bhai keyword for if statements */
+    AGAR_BHAI,
+    /** warna bhai keyword for else statements */
+    WARNA_BHAI,
+    /** nahi to bhai keyword for else-if (not fully implemented) */
+    NAHI_TO_BHAI,
+    /** jab tak bhai keyword for loops */
+    JAB_TAK_BHAI,
+    /** bas kar bhai keyword for break */
+    BAS_KAR_BHAI,
+    /** agla dekh bhai keyword for continue */
+    AGLA_DEKH_BHAI,
+    /** sahi literal */
+    SAHI,
+    /** galat literal */
+    GALAT,
 
-    // Null character
+    // Null
+    /** nalla literal */
     NALLA,
 
     // End of File
+    /** End of file token */
     EOF
 }

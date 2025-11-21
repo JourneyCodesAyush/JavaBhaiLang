@@ -8,16 +8,40 @@ import java.util.Map;
 import io.github.journeycodesayush.javabhailang.BhaiLang;
 import static io.github.journeycodesayush.javabhailang.lexer.TokenType.*;
 
+/**
+ * The lexer for BhaiLang source code.
+ * <p>
+ * Converts a raw source string into a list of {@link Token} objects.
+ * Handles single-character tokens, multi-character operators, keywords,
+ * literals (numbers, strings, booleans), null values, and multi-word keywords.
+ * </p>
+ */
 public class Scanner {
 
+    /** The source code string to scan. */
     private final String source;
+
+    /** The list of tokens produced after scanning. */
     private final List<Token> tokens = new ArrayList<>();
+
+    /** Start index of the current lexeme in the source string. */
     private int start = 0;
+
+    /** Current index being processed in the source string. */
     private int current = 0;
+
+    /** Current line number in the source code. */
     private int line = 1;
+
+    /** Buffer to accumulate characters for multi-character tokens or words. */
     private StringBuilder wordBuffer = new StringBuilder();
 
+    /** Mapping of single-word keywords to their token types. */
     private static final Map<String, TokenType> keywords;
+
+    /**
+     * Mapping of multi-word keywords (as lists of strings) to their token types.
+     */
     private static final Map<List<String>, TokenType> multiKeywords;
 
     static {
@@ -39,10 +63,20 @@ public class Scanner {
         multiKeywords.put(List.of("agla", "dekh", "bhai"), AGLA_DEKH_BHAI);
     }
 
+    /**
+     * Constructs a scanner for the given source code.
+     *
+     * @param source the BhaiLang source code to tokenize (String)
+     */
     public Scanner(String source) {
         this.source = source;
     }
 
+    /**
+     * Scans the entire source string and returns a list of tokens.
+     *
+     * @return a list of {@link Token} objects representing the scanned source
+     */
     public List<Token> scanTokens() {
         while (!isAtEnd()) {
             start = current;
@@ -58,22 +92,43 @@ public class Scanner {
         return tokens;
     }
 
+    /**
+     * Checks whether the scanner has reached the end of the source string.
+     *
+     * @return true if the scanner has processed all characters, false otherwise
+     */
     private boolean isAtEnd() {
         return current >= source.length();
     }
 
+    /**
+     * Returns the current character without advancing the scanner.
+     *
+     * @return the current character, or '\0' if at the end
+     */
     private char peek() {
         if (isAtEnd())
             return '\0';
         return source.charAt(current);
     }
 
+    /**
+     * Returns the next character without advancing the scanner.
+     *
+     * @return the next character, or '\0' if at the end
+     */
     private char peekNext() {
         if (current + 1 >= source.length())
             return '\0';
         return source.charAt(current + 1);
     }
 
+    /**
+     * Checks if the current character matches the expected character.
+     *
+     * @param expected the character to match (char)
+     * @return true if matched and scanner advanced, false otherwise
+     */
     private boolean match(char expected) {
         if (isAtEnd())
             return false;
@@ -83,21 +138,47 @@ public class Scanner {
         return true;
     }
 
+    /**
+     * Adds a token to the token list with the given type.
+     *
+     * @param type the type of token (TokenType)
+     */
     private void addToken(TokenType type) {
         addToken(type, null);
     }
 
+    /**
+     * Adds a token with the given type, lexeme, and literal value.
+     *
+     * @param type    the token type (TokenType)
+     * @param lexeme  the source lexeme (String)
+     * @param literal the literal value (Object), if applicable
+     */
     private void addToken(TokenType type, String lexeme, Object literal) {
         if (lexeme == null || lexeme.isBlank())
             return;
         tokens.add(new Token(type, lexeme.trim(), literal, line));
     }
 
+    /**
+     * Adds a token with the given type and literal value, inferring lexeme from
+     * source.
+     *
+     * @param type    the token type (TokenType)
+     * @param literal the literal value (Object), if applicable
+     */
     private void addToken(TokenType type, Object literal) {
         String text = source.substring(start, current);
         tokens.add(new Token(type, text.trim(), literal, line));
     }
 
+    /**
+     * Scans a single token from the source.
+     * <p>
+     * Handles operators, delimiters, numbers, strings, identifiers, keywords,
+     * whitespace, and comments.
+     * </p>
+     */
     private void scanToken() {
         char c = advance();
 
@@ -165,6 +246,12 @@ public class Scanner {
         }
     }
 
+    /**
+     * Processes a collected word buffer into a token, handling keywords,
+     * multi-word keywords, and identifiers.
+     *
+     * @param word the word to process (String)
+     */
     private void processWord(String word) {
         word = word.trim();
         if (word.isEmpty())
@@ -216,6 +303,11 @@ public class Scanner {
             addToken(IDENTIFIER, word.trim(), null);
     }
 
+    /**
+     * Reads the next word from the source string for multi-word keyword processing.
+     *
+     * @return the next word, or null if none
+     */
     private String readNextWord() {
         while (!isAtEnd() && isWhiteSpace(peek())) {
             if (peek() == '\n')
@@ -230,6 +322,9 @@ public class Scanner {
         return nextWord.isEmpty() ? null : nextWord;
     }
 
+    /**
+     * Scans a string literal and adds it as a token.
+     */
     private void string() {
         while (peek() != '"' && !isAtEnd()) {
             if (peek() == '\n')
@@ -245,22 +340,49 @@ public class Scanner {
         addToken(STRING, value);
     }
 
+    /**
+     * Advances the scanner by one character and returns it.
+     *
+     * @return the current character
+     */
+
     private char advance() {
         return source.charAt(current++);
     }
 
+    /**
+     * Checks if a character is alphabetic (a-z, A-Z, or '_').
+     *
+     * @param c the character to check (char)
+     * @return true if alphabetic, false otherwise
+     */
     private boolean isAlpha(char c) {
         return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_';
     }
 
+    /**
+     * Checks if a character is alphanumeric (alphabetic or digit).
+     *
+     * @param c the character to check (char)
+     * @return true if alphanumeric, false otherwise
+     */
     private boolean isAlphaNumeric(char c) {
         return isAlpha(c) || isDigit(c);
     }
 
+    /**
+     * Checks if a character is a digit (0-9).
+     *
+     * @param c the character to check
+     * @return true if a digit, false otherwise
+     */
     private boolean isDigit(char c) {
         return c >= '0' && c <= '9';
     }
 
+    /**
+     * Scans a number literal (integer or floating-point) and adds it as a token.
+     */
     private void number() {
         while (isDigit(peek()))
             advance();
@@ -272,6 +394,12 @@ public class Scanner {
         addToken(NUMBER, Double.parseDouble(source.substring(start, current)));
     }
 
+    /**
+     * Checks if a character is whitespace (space, tab, newline, carriage return).
+     *
+     * @param c the character to check (char)
+     * @return true if whitespace, false otherwise
+     */
     private boolean isWhiteSpace(char c) {
         return c == ' ' || c == '\t' || c == '\n' || c == '\r';
     }
