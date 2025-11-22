@@ -26,6 +26,10 @@ public abstract class Stmt {
     public R visitVarStmt(Var stmt);
 
     public R visitWhileStmt(While stmt);
+
+    public R visitBreakStmt(Break stmt);
+
+    public R visitContinueStmt(Continue stmt);
   }
 
   public static class Block extends Stmt {
@@ -111,6 +115,26 @@ public abstract class Stmt {
     @Override
     public <R> R accept(Visitor<R> visitor) {
       return visitor.visitWhileStmt(this);
+    }
+  }
+
+  public static class Break extends Stmt {
+    public Break() {
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+      return visitor.visitBreakStmt(this);
+    }
+  }
+
+  public static class Continue extends Stmt {
+    public Continue() {
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+      return visitor.visitContinueStmt(this);
     }
   }
 
