@@ -1,6 +1,9 @@
 # Java
 *.class
 
+#JavaDoc (generated)
+docs/
+
 # IDEs
 .vscode/
 .idea/
