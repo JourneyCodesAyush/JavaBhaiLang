@@ -242,6 +242,21 @@ public class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
                 "}";
     }
 
+    @Override
+    public String visitBreakStmt(Stmt.Break stmt) {
+        return "{\n" +
+                INDENT + "\"type\": \"Break\"" +
+                "}";
+    }
+
+    @Override
+    public String visitContinueStmt(Stmt.Continue stmt) {
+        return "{\n" +
+                INDENT + "\"type\": \"Continue\"" +
+                "}";
+
+    }
+
     /**
      * Standalone main method for testing the AST printer.
      * Generates a sample expression and prints its JSON representation.
