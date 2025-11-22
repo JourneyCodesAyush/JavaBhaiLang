@@ -110,6 +110,14 @@ public class Parser {
         if (match(JAB_TAK_BHAI)) {
             return whileStatement();
         }
+        if (match(BAS_KAR_BHAI)) {
+            consume(SEMICOLON, "Expect ';' after 'bas kar bhai'.");
+            return new Stmt.Break();
+        }
+        if (match(AGLA_DEKH_BHAI)) {
+            consume(SEMICOLON, "Expect ';' after 'agla dekh bhai'.");
+            return new Stmt.Continue();
+        }
         if (match(LEFT_CURLY_BRACE))
             return new Stmt.Block(block());
         return expressionStatement();
