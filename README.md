@@ -20,7 +20,8 @@
     - [Built-ins](#built-ins)
     - [Conditionals](#conditionals)
     - [Loops](#loops)
-  - [🚀 Features](#-features)
+      - [Break \& Continue](#break--continue)
+  - [⚙️ Features](#️-features)
   - [⚠️ Known Limitations](#️-known-limitations)
   - [📁 Project Structure](#-project-structure)
   - [🧑‍💻 Development Guide](#-development-guide)
@@ -31,11 +32,12 @@
 
 ---
 
-**JavaBhaiLang** is a minimal, fun programming language interpreter built in **Java**, inspired by *Robert Nystrom’s “[Crafting Interpreters](https://craftinginterpreters.com)”*.  
+**JavaBhaiLang** is a minimal, fun programming language interpreter built in **Java**, inspired by _Robert Nystrom’s “[Crafting Interpreters](https://craftinginterpreters.com)”_.
 
 This project, as of now, is a **subset of JavaBhaiLang**, designed for experimentation without diving into full grammar, functions, or advanced features (yet). Future updates may include full JavaBhaiLang support and user-defined functions.
 
-*`In the grand scheme of things, Python quietly whispers, Java obeys loyally, and Bhai Lang just unleashes chaos. The true hierarchy of power is subtle.`*
+_`In the grand scheme of things, Python quietly whispers, Java obeys loyally, and Bhai Lang just unleashes chaos. The true hierarchy of power is subtle.`_
+
 ```text
       +-------------------------------------+
       |   Python VM (PVM)                   |
@@ -65,11 +67,10 @@ This project, as of now, is a **subset of JavaBhaiLang**, designed for experimen
       +-------------------------------------+
 
 ```
-*TL;DR: Python whispers, Java obeys, Bhai Lang just does whatever it wants.*
 
+_TL;DR: Python whispers, Java obeys, Bhai Lang just does whatever it wants._
 
-
-> ⚠️ **Note**: This is currently experimental and meant for fun and learning purposes.  
+> ⚠️ **Note**: This is currently experimental and meant for fun and learning purposes.
 
 ---
 
@@ -77,17 +78,17 @@ This project, as of now, is a **subset of JavaBhaiLang**, designed for experimen
 
 You need:
 
-- **Java** (any recent version, 2-3 years old also works)  
+- **Java** (any recent version, 2-3 years old also works)
 - **Python** (for the helper script that compiles and runs JavaBhaiLang)
 
 ### Steps:
 
 1. Clone the repo:
 
-      ```bash
-      git clone https://github.com/JourneyCodesAyush/javabhailang.git
-      cd javabhailang
-      ```
+   ```bash
+   git clone https://github.com/JourneyCodesAyush/javabhailang.git
+   cd javabhailang
+   ```
 
 2. Open the REPL using the Python helper script:
    ```bash
@@ -99,26 +100,30 @@ You need:
    ```
 
 The Python script will:
+
 - Compile all Java files in src/ to out/ directory
 - Run the main JavaBhaiLang interpreter
 - Clean up .class files on exit
-  
+
 ---
 
 ## 📝 Examples
 
->NOTE: Semicolon `;` is ***mandatory***
+> NOTE: Semicolon `;` is **_mandatory_**
 
 ### Variables
+
 Variables can be declared using `bhai ye hai`
-```bash
+
+```
 bhai ye hai a = 1729;
 ```
 
 ### Types
+
 Numbers and Strings like other well known languages. Null values denoted by `nalla`, boolean values by `sahi` and `galat`
 
-```bash
+```
 
 bhai ye hai string = "hello bhai";
 bhai ye hai number = 14.0;
@@ -127,26 +132,27 @@ bhai ye hai boolean_value_false = galat;
 bhai ye hai null_value = nalla;
 
 ```
+
 ### Built-ins
 
 Use `bol bhai` to print anything to console
 
-```bash
+```
 bol bhai "Hello World";
 bhai ye hai a = 10;
 {
       bhai ye hai b = 20;
       bol bhai a + b;
 }
-bhai "sahi hai bhai";
+bol bhai "sahi hai bhai";
 ```
 
 ### Conditionals
 
-This interpreter supports `agar bhai` and `warna bhai` as if-else ladder. 
+This interpreter supports `agar bhai` and `warna bhai` as if-else ladder.
 Does not support `if-else-if` ladder as of now though the syntax is defined.
 
-```bash
+```
 bhai ye hai a = 10;
 agar bhai (a < 20) {
       bol bhai "a is less than 20";
@@ -157,14 +163,14 @@ agar bhai (a < 20) {
 
 ### Loops
 
-The statements inside `jab tak bhai` are executed until the condition is evaluated to `sahi`. 
+The statements inside `jab tak bhai` are executed until the condition is evaluated to `sahi`.
 The moment condition turns `galat`, loop terminates.
 
-```bash
+```
 bhai ye hai a = 0;
 jab tak bhai (a < 10) {
       a = a + 1;
-      agar bhai (a == 5) {                  
+      agar bhai (a == 5) {
             bol bhai "andar se bol bhai 5";
       }
       agar bhai (a == 6) {
@@ -175,15 +181,47 @@ jab tak bhai (a < 10) {
 bol bhai "done";
 ```
 
+#### Break & Continue
+
+You can control loop flow using:
+
+- `agla dekh bhai;` → continue
+- `bas kar bhai;` → break
+
+```
+bhai ye hai counter = 0;
+
+jab tak bhai (counter < 10) {
+      counter = counter + 1;
+
+      agar bhai (counter == 3) {
+            bol bhai "skipping 3 bhai";
+            agla dekh bhai;
+      }
+
+      agar bhai (counter == 7) {
+            bol bhai "ruk jao bhai 7 pe";
+            bas kar bhai;
+      }
+
+      bol bhai counter;
+}
+
+bol bhai "loop khatam bhai";
+```
+
 ---
 
-## 🚀 Features
+## ⚙️ Features
 
 - 🖥️ Minimal JavaBhaiLang interpreter in Java
 - 🎯 Focus on learning interpreter design rather than full language features
 - 📝 Easy-to-extend for future grammar and functions
 - 🐍 Python helper script for compiling and running code effortlessly
 - 🔧 No external dependencies besides Java & Python
+- ➕ Added support for loop control statements:
+  - `bas kar bhai` → break
+  - `agla dekh bhai` → continue
 
 ---
 
@@ -194,7 +232,7 @@ bol bhai "done";
 - Comma-separated values not implemented in the built-in print (`bol bhai`)
 - Complex assignment operators not implemented (`+=`, `-=`, `*=`, `/=`)
 - Only single-file execution via `run_bhai_lang.py`
-- `bas kar bhai` and `agla dekh bhai` are yet to be implemented
+- `bas kar bhai` (break) and `agla dekh bhai` (continue) are now supported
 
 ---
 
@@ -212,7 +250,7 @@ JavaBhaiLang/
 │               ├── lexer/          # Lexer, Token and TokenType
 │               ├── parser/         # Parser, Expression and Statement
 │               └── tool/           # Generate AST
-│               
+│
 ├── LICENSE                  # MIT License
 └── README.md                # You're reading it!
 
@@ -241,21 +279,22 @@ feat(<scope>): add new feature
 fix(<scope>): bug fix
 docs(<scope>): documentation change
 ```
+
 ---
 
 ## 🤝 Contributing
 
 Want to contribute to **JavaBhaiLang**? Awesome! Here's a quick guide:
 
-- **Fork the repo** and work on a separate branch (`feat/feature-name`, `fix/bug-name`)  
-- **Keep changes modular**: one feature, bug fix, or improvement per commit  
-- **Commit messages**: use **Angular format**: `<type>(<scope>): short description`  
-  - **Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`  
-  - **Scopes:** `interpreter | lexer | parser | tool | examples | docs | tests`  
-- **Test your changes** using `run_bhai_lang.py`  
+- **Fork the repo** and work on a separate branch (`feat/feature-name`, `fix/bug-name`)
+- **Keep changes modular**: one feature, bug fix, or improvement per commit
+- **Commit messages**: use **Angular format**: `<type>(<scope>): short description`
+  - **Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
+  - **Scopes:** `interpreter | lexer | parser | tool | examples | docs | tests`
+- **Test your changes** using `run_bhai_lang.py`
 - If adding new language features, statements, or built-in commands, follow the existing code structure in `src/main/java/io/github/journeycodesayush/JavaBhaiLang/` and test thoroughly with `run_bhai_lang.py`.
-- **Open a Pull Request** with a clear description  
-- **Respect the Code of Conduct**: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)  
+- **Open a Pull Request** with a clear description
+- **Respect the Code of Conduct**: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 
 ---
 
