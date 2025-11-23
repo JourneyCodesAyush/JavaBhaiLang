@@ -162,9 +162,13 @@ public class Parser {
      * @return a {@link Stmt.Print} object representing the print statement
      */
     private Stmt printStatement() {
-        Expr value = expression();
+        List<Expr> expressions = new ArrayList<>();
+        expressions.add(expression());
+        while (match(COMMA)) {
+            expressions.add(expression());
+        }
         consume(SEMICOLON, "Expect ';' after value.");
-        return new Stmt.Print(value);
+        return new Stmt.Print(expressions);
     }
 
     /**
