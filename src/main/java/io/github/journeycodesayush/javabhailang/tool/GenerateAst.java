@@ -50,7 +50,7 @@ public class GenerateAst {
                 "Block  : List<Stmt> statements    ",
                 "Expression  : Expr expression",
                 "If          : Expr condition, Stmt thenBranch," + " Stmt elseBranch",
-                "Print       : Expr expression",
+                "Print       : List<Expr> expressions",
                 "Var         : Token name, Expr initializer",
                 "While       : Expr condition, Stmt body",
                 "Break       : ",

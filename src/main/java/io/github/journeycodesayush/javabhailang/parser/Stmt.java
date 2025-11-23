@@ -76,11 +76,11 @@ public abstract class Stmt {
   }
 
   public static class Print extends Stmt {
-    public Print(Expr expression) {
-      this.expression = expression;
+    public Print(List<Expr> expressions) {
+      this.expressions = expressions;
     }
 
-    public final Expr expression;
+    public final List<Expr> expressions;
 
     @Override
     public <R> R accept(Visitor<R> visitor) {
