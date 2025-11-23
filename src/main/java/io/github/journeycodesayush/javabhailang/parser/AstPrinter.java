@@ -201,7 +201,7 @@ public class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
     public String visitPrintStmt(Stmt.Print stmt) {
         return "{\n" +
                 INDENT + "\"type\": \"Print\",\n" +
-                INDENT + "\"expression\": " + stmt.expression.accept(this) + "\n" +
+                INDENT + "\"expression\": " + listToJson(stmt.expressions) + "\n" +
                 "}";
     }
 
