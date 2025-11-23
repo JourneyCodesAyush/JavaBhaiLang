@@ -3,6 +3,7 @@
 ![Java](https://img.shields.io/badge/Java-17-orange)
 ![Python](https://img.shields.io/badge/Python-3.10-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
+![Version](https://img.shields.io/github/v/tag/JourneyCodesAyush/javabhailang?label=version&color=purple&sort=semver)
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue)
 
@@ -12,6 +13,10 @@
 
 - [🖥️ JavaBhaiLang Interpreter](#️-javabhailang-interpreter)
   - [📑 Table of Contents](#-table-of-contents)
+  - [🆕 What's New](#-whats-new)
+    - [v0.3.0](#v030)
+    - [v0.2.0](#v020)
+    - [v0.1.0](#v010)
   - [🏃 Run Locally](#-run-locally)
     - [Steps:](#steps)
   - [📝 Examples](#-examples)
@@ -35,6 +40,30 @@
 **JavaBhaiLang** is a minimal, fun programming language interpreter built in **Java**, inspired by _Robert Nystrom’s “[Crafting Interpreters](https://craftinginterpreters.com)”_.
 
 This project, as of now, is a **subset of JavaBhaiLang**, designed for experimentation without diving into full grammar, functions, or advanced features (yet). Future updates may include full JavaBhaiLang support and user-defined functions.
+
+---
+
+## 🆕 What's New
+
+### v0.3.0
+
+- Parser now supports multiple variables in `bol bhai` (print) statement.
+- Interpreter updated to handle multiple expressions in print.
+- `AstPrinter` updated to print multiple expressions in JSON AST.
+- Minor bug fixes and code cleanup.
+
+### v0.2.0
+
+- Added loop control statements:
+  - `bas kar bhai` → break
+  - `agla dekh bhai` → continue
+
+### v0.1.0
+
+- Initial unstable release
+- Variable declaration, print, conditionals, and loops
+
+---
 
 _`In the grand scheme of things, Python quietly whispers, Java obeys loyally, and Bhai Lang just unleashes chaos. The true hierarchy of power is subtle.`_
 
@@ -135,16 +164,17 @@ bhai ye hai null_value = nalla;
 
 ### Built-ins
 
-Use `bol bhai` to print anything to console
+Use `bol bhai` to print anything to console. Now supports **multiple variables**:
 
-```
-bol bhai "Hello World";
+```bhai
 bhai ye hai a = 10;
-{
-      bhai ye hai b = 20;
-      bol bhai a + b;
-}
-bol bhai "sahi hai bhai";
+bhai ye hai b = 20;
+
+# Single variable
+bol bhai a;
+
+# Multiple variables
+bol bhai "Values are:", a, b;
 ```
 
 ### Conditionals
@@ -195,19 +225,19 @@ jab tak bhai (counter < 10) {
       counter = counter + 1;
 
       agar bhai (counter == 3) {
-            bol bhai "skipping 3 bhai";
+            bol bhai "Skipping 3, counter:", counter;
             agla dekh bhai;
       }
 
       agar bhai (counter == 7) {
-            bol bhai "ruk jao bhai 7 pe";
+            bol bhai "Stop at 7, counter:", counter;
             bas kar bhai;
       }
 
       bol bhai counter;
 }
 
-bol bhai "loop khatam bhai";
+bol bhai "Loop finished!";
 ```
 
 ---
@@ -229,7 +259,7 @@ bol bhai "loop khatam bhai";
 
 - `if-else-if` ladder is partially implemented
 - No standard library except built-in print (`bol bhai`)
-- Comma-separated values not implemented in the built-in print (`bol bhai`)
+- Multi-variable `bol bhai` is now supported
 - Complex assignment operators not implemented (`+=`, `-=`, `*=`, `/=`)
 - Only single-file execution via `run_bhai_lang.py`
 - `bas kar bhai` (break) and `agla dekh bhai` (continue) are now supported
