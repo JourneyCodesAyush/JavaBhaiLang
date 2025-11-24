@@ -14,6 +14,7 @@
 - [🖥️ JavaBhaiLang Interpreter](#️-javabhailang-interpreter)
   - [📑 Table of Contents](#-table-of-contents)
   - [🆕 What's New](#-whats-new)
+    - [v0.4.0](#v040)
     - [v0.3.0](#v030)
     - [v0.2.0](#v020)
     - [v0.1.0](#v010)
@@ -45,12 +46,15 @@ This project, as of now, is a **subset of JavaBhaiLang**, designed for experimen
 
 ## 🆕 What's New
 
+### v0.4.0
+
+- Added support for **complex assignment operators**: `+=`, `-=`, `*=`, `/=`.
+
 ### v0.3.0
 
 - Parser now supports multiple variables in `bol bhai` (print) statement.
 - Interpreter updated to handle multiple expressions in print.
 - `AstPrinter` updated to print multiple expressions in JSON AST.
-- Minor bug fixes and code cleanup.
 
 ### v0.2.0
 
@@ -142,10 +146,20 @@ The Python script will:
 
 ### Variables
 
-Variables can be declared using `bhai ye hai`
+Variables can be declared using `bhai ye hai`.
 
-```
-bhai ye hai a = 1729;
+BhaiLang now also supports **complex assignment operators** (`+=`, `-=`, `*=`, `/=`).
+
+```bhai
+bhai ye hai a = 10;
+bhai ye hai b = 5;
+
+a += 3;   // Equivalent to: a = a + 3
+b -= 2;   // Equivalent to: b = b - 2
+a *= b;   // Equivalent to: a = a * b
+b /= 3;   // Equivalent to: b = b / 3
+
+bol bhai a, b;  # Prints the updated values
 ```
 
 ### Types
@@ -260,7 +274,7 @@ bol bhai "Loop finished!";
 - `if-else-if` ladder is partially implemented
 - No standard library except built-in print (`bol bhai`)
 - Multi-variable `bol bhai` is now supported
-- Complex assignment operators not implemented (`+=`, `-=`, `*=`, `/=`)
+- Complex assignment operators are now supported (`+=`, `-=`, `*=`, `/=`)
 - Only single-file execution via `run_bhai_lang.py`
 - `bas kar bhai` (break) and `agla dekh bhai` (continue) are now supported
 
