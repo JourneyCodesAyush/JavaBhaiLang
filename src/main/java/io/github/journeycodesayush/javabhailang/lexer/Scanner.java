@@ -195,9 +195,15 @@ public class Scanner {
             case ',' -> addToken(COMMA);
             case '.' -> addToken(DOT);
             case ';' -> addToken(SEMICOLON);
-            case '+' -> addToken(PLUS);
-            case '-' -> addToken(MINUS);
-            case '*' -> addToken(STAR);
+            case '+' -> {
+                addToken(match('=') ? PLUS_EQUAL : MINUS);
+            }
+            case '-' -> {
+                addToken(match('=') ? MINUS_EQUAL : MINUS);
+            }
+            case '*' -> {
+                addToken(match('=') ? STAR_EQUAL : STAR);
+            }
             case '!' -> addToken(match('=') ? BANG_EQUAL : BANG);
             case '=' -> addToken(match('=') ? EQUAL_EQUAL : EQUAL);
             case '>' -> addToken(match('=') ? GREATER_EQUAL : GREATER);
@@ -210,7 +216,9 @@ public class Scanner {
                     }
                     while (!isAtEnd() && peek() != '\n')
                         advance();
-                } else
+                } else if (match('='))
+                    addToken(SLASH_EQUAL);
+                else
                     addToken(SLASH);
             }
             case '&' -> {

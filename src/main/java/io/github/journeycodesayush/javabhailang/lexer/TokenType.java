@@ -53,6 +53,14 @@ public enum TokenType {
     LOGICAL_AND,
     /** || characters */
     LOGICAL_OR,
+    /** += character */
+    PLUS_EQUAL,
+    /** -= character */
+    MINUS_EQUAL,
+    /** *= character */
+    STAR_EQUAL,
+    /** *= character */
+    SLASH_EQUAL,
 
     // Identifier, Literal, String, Number
     /** Identifiers (variable names) */
