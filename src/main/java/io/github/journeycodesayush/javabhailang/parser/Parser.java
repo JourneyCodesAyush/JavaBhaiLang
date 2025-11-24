@@ -293,6 +293,34 @@ public class Parser {
                 return new Expr.Assign(name, value);
             }
             error(equals, "Invalid assignment target.");
+        } else if (match(PLUS_EQUAL)) {
+            Expr value = assignment();
+            Expr binaryExpr = new Expr.Binary(expr, new Token(PLUS, "+", null, previous().getLine()), value);
+            if (expr instanceof Expr.Variable) {
+                Token name = ((Expr.Variable) expr).name;
+                return new Expr.Assign(name, binaryExpr);
+            }
+        } else if (match(MINUS_EQUAL)) {
+            Expr value = assignment();
+            Expr binaryExpr = new Expr.Binary(expr, new Token(MINUS, "-", null, previous().getLine()), value);
+            if (expr instanceof Expr.Variable) {
+                Token name = ((Expr.Variable) expr).name;
+                return new Expr.Assign(name, binaryExpr);
+            }
+        } else if (match(STAR_EQUAL)) {
+            Expr value = assignment();
+            Expr binaryExpr = new Expr.Binary(expr, new Token(STAR, "*", null, previous().getLine()), value);
+            if (expr instanceof Expr.Variable) {
+                Token name = ((Expr.Variable) expr).name;
+                return new Expr.Assign(name, binaryExpr);
+            }
+        } else if (match(SLASH_EQUAL)) {
+            Expr value = assignment();
+            Expr binaryExpr = new Expr.Binary(expr, new Token(SLASH, "/", null, previous().getLine()), value);
+            if (expr instanceof Expr.Variable) {
+                Token name = ((Expr.Variable) expr).name;
+                return new Expr.Assign(name, binaryExpr);
+            }
         }
 
         return expr;
