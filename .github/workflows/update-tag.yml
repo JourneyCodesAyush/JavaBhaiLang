@@ -1,0 +1,42 @@
+name: Update Version with Latest Tag
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+
+      - name: Get Tag Name
+        id: tag
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Update version in Java file
+        run: |
+          FILE="bhailang.java"
+          echo "Updating $FILE to version $TAG_NAME"
+          # Replace the version in the DEPS line
+          sed -i "s/com.github.journeycodesayush:javabhailang:v[0-9]\+\.[0-9]\+\.[0-9]\+/com.github.journeycodesayush:javabhailang:$TAG_NAME/" $FILE
+          # Show the updated DEPS line
+          echo "Updated DEPS line:"
+          grep 'com.github.journeycodesayush:javabhailang:' $FILE
+
+      - name: Commit and push version update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if grep -q "com.github.journeycodesayush:javabhailang:$TAG_NAME" bhailang.java; then
+            echo "Version is already $TAG_NAME. No changes to commit."
+          else
+           git add bhailang.java
+           git  commit -m "ci: update bhailang.java to $TAG_NAME"
+           git push origin main
+          fi
