@@ -4,6 +4,9 @@
 #JavaDoc (generated)
 docs/
 
+# Maven generated directory
+target/
+
 # IDEs
 .vscode/
 .idea/
