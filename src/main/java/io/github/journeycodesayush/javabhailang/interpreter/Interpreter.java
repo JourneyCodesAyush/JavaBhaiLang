@@ -80,13 +80,16 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         Object right = evaluate(expr.right);
 
         switch (expr.operator.getType()) {
-            case BANG:
+            case BANG -> {
                 return !isTruthy(right);
-            case MINUS:
+            }
+            case MINUS -> {
                 checkNumberOperand(expr.operator, right);
                 return -(double) right;
-            default:
+            }
+            default -> {
                 return null;
+            }
         }
     }
 
@@ -96,28 +99,35 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         Object right = evaluate(expr.right);
 
         switch (expr.operator.getType()) {
-            case GREATER:
+            case GREATER -> {
                 checkNumberOperands(expr.operator, left, right);
                 return (double) left > (double) right;
-            case GREATER_EQUAL:
+            }
+            case GREATER_EQUAL -> {
                 checkNumberOperands(expr.operator, left, right);
                 return (double) left >= (double) right;
-            case LESS:
+            }
+            case LESS -> {
                 checkNumberOperands(expr.operator, left, right);
                 return (double) left < (double) right;
-            case LESS_EQUAL:
+            }
+            case LESS_EQUAL -> {
                 checkNumberOperands(expr.operator, left, right);
                 return (double) left <= (double) right;
-            case MINUS:
+            }
+            case MINUS -> {
                 checkNumberOperands(expr.operator, left, right);
                 return (double) left - (double) right;
-            case SLASH:
+            }
+            case SLASH -> {
                 checkNumberOperands(expr.operator, left, right);
                 return (double) left / (double) right;
-            case STAR:
+            }
+            case STAR -> {
                 checkNumberOperands(expr.operator, left, right);
                 return (double) left * (double) right;
-            case PLUS:
+            }
+            case PLUS -> {
                 if (left == null || right == null) {
                     throw new NallaPointerException(expr.operator,
                             "Bhai! Nalla value caught!!!");
@@ -131,13 +141,18 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 if ((left instanceof String) || (right instanceof String)) {
                     return stringify(left) + stringify(right);
                 }
-            case EQUAL_EQUAL:
+                throw new RuntimeException("Operands must be two numbers or strings.");
+            }
+            case EQUAL_EQUAL -> {
                 return isEqual(left, right);
-            case BANG_EQUAL:
+            }
+            case BANG_EQUAL -> {
                 return !isEqual(left, right);
+            }
 
-            default:
+            default -> {
                 return null;
+            }
         }
         // return null;
     }
