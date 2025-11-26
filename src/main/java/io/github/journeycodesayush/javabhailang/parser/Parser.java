@@ -498,18 +498,33 @@ public class Parser {
                 return;
             }
             switch (peek().getType()) {
-                case BHAI_YE_HAI:
-                case BOL_BHAI:
-                case AGAR_BHAI:
-                case WARNA_BHAI:
-                case NAHI_TO_BHAI:
-                case JAB_TAK_BHAI:
-                case BAS_KAR_BHAI:
-                case AGLA_DEKH_BHAI:
+                case BHAI_YE_HAI -> {
                     return;
+                }
+                case BOL_BHAI -> {
+                    return;
+                }
+                case AGAR_BHAI -> {
+                    return;
+                }
+                case WARNA_BHAI -> {
+                    return;
+                }
+                case NAHI_TO_BHAI -> {
+                    return;
+                }
+                case JAB_TAK_BHAI -> {
+                    return;
+                }
+                case BAS_KAR_BHAI -> {
+                    return;
+                }
+                case AGLA_DEKH_BHAI -> {
+                    return;
+                }
 
-                default:
-                    break;
+                default -> {
+                }
             }
             advance();
         }
