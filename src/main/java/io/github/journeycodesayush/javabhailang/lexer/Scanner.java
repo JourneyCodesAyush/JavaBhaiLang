@@ -196,7 +196,7 @@ public class Scanner {
             case '.' -> addToken(DOT);
             case ';' -> addToken(SEMICOLON);
             case '+' -> {
-                addToken(match('=') ? PLUS_EQUAL : MINUS);
+                addToken(match('=') ? PLUS_EQUAL : PLUS);
             }
             case '-' -> {
                 addToken(match('=') ? MINUS_EQUAL : MINUS);
