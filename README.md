@@ -14,10 +14,7 @@
 - [🖥️ JavaBhaiLang Interpreter](#️-javabhailang-interpreter)
   - [📑 Table of Contents](#-table-of-contents)
   - [🆕 What's New](#-whats-new)
-    - [v0.4.0](#v040)
-    - [v0.3.0](#v030)
-    - [v0.2.0](#v020)
-    - [v0.1.0](#v010)
+    - [v0.4.1](#v041)
   - [🏃 Run Locally](#-run-locally)
     - [Steps:](#steps)
   - [📝 Examples](#-examples)
@@ -46,26 +43,11 @@ This project, as of now, is a **subset of JavaBhaiLang**, designed for experimen
 
 ## 🆕 What's New
 
-### v0.4.0
+### v0.4.1
 
-- Added support for **complex assignment operators**: `+=`, `-=`, `*=`, `/=`.
-
-### v0.3.0
-
-- Parser now supports multiple variables in `bol bhai` (print) statement.
-- Interpreter updated to handle multiple expressions in print.
-- `AstPrinter` updated to print multiple expressions in JSON AST.
-
-### v0.2.0
-
-- Added loop control statements:
-  - `bas kar bhai` → break
-  - `agla dekh bhai` → continue
-
-### v0.1.0
-
-- Initial unstable release
-- Variable declaration, print, conditionals, and loops
+- **Lexer (`Scanner.java`)**: Correctly handle `+` and `+=` operators.
+  - Ensures a `+` token is added when not followed by `=`, instead of mistakenly using `-`.
+- **Interpreter** and **Parser**: Refactored switch-case syntax to modern Java 14+ arrow syntax for cleaner code.
 
 ---
 
