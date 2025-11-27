@@ -59,14 +59,19 @@ public abstract class Stmt {
   }
 
   public static class If extends Stmt {
-    public If(Expr condition, Stmt thenBranch, Stmt elseBranch) {
+    public If(Expr condition, Stmt thenBranch, List<Expr> elseIfConditions, List<Stmt> elseIfBranches,
+        Stmt elseBranch) {
       this.condition = condition;
       this.thenBranch = thenBranch;
+      this.elseIfConditions = elseIfConditions;
+      this.elseIfBranches = elseIfBranches;
       this.elseBranch = elseBranch;
     }
 
     public final Expr condition;
     public final Stmt thenBranch;
+    public final List<Expr> elseIfConditions;
+    public final List<Stmt> elseIfBranches;
     public final Stmt elseBranch;
 
     @Override
