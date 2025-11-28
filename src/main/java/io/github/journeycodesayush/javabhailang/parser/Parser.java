@@ -148,12 +148,26 @@ public class Parser {
         consume(RIGHT_PAREN, "Expect ')' after if condition.");
 
         Stmt thenBranch = statement();
+
+        List<Expr> elseIfconditions = new ArrayList<>();
+        List<Stmt> elseIfBranches = new ArrayList<>();
+
+        while (match(NAHI_TO_BHAI)) {
+            consume(LEFT_PAREN, "Expect '(' after 'else-if' condition.");
+            Expr elifCond = expression();
+            consume(RIGHT_PAREN, "Expect ')' after 'else-if' condition.");
+            Stmt elIfBody = statement();
+
+            elseIfconditions.add(elifCond);
+            elseIfBranches.add(elIfBody);
+        }
+
         Stmt elseBranch = null;
         if (match(WARNA_BHAI)) {
             elseBranch = statement();
         }
 
-        return new Stmt.If(condition, thenBranch, elseBranch);
+        return new Stmt.If(condition, thenBranch, elseIfconditions, elseIfBranches, elseBranch);
     }
 
     /**
