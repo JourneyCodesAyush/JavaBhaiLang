@@ -343,6 +343,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     private String stringify(Object object) {
         if (object == null)
             return "nalla";
+        if (object instanceof Boolean) {
+            if ((Boolean) object)
+                return "sahi";
+            else
+                return "galat";
+        }
         if (object instanceof Double) {
             String text = object.toString();
             if (text.endsWith(".0"))
