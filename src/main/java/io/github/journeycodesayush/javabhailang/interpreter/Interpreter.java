@@ -180,7 +180,17 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     public Void visitIfStmt(Stmt.If stmt) {
         if (isTruthy(evaluate(stmt.condition))) {
             execute(stmt.thenBranch);
-        } else if (stmt.elseBranch != null) {
+            return null;
+        }
+
+        for (int i = 0; i < stmt.elseIfConditions.size(); i++) {
+            if (isTruthy(evaluate(stmt.elseIfConditions.get(i)))) {
+                execute(stmt.elseIfBranches.get(i));
+                return null;
+            }
+        }
+
+        if (stmt.elseBranch != null) {
             execute(stmt.elseBranch);
         }
         return null;
