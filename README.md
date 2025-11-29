@@ -14,7 +14,7 @@
 - [🖥️ JavaBhaiLang Interpreter](#️-javabhailang-interpreter)
   - [📑 Table of Contents](#-table-of-contents)
   - [🆕 What's New](#-whats-new)
-    - [v0.4.1](#v041)
+    - [v0.5.0](#v050)
   - [🏃 Run Locally](#-run-locally)
     - [Steps:](#steps)
   - [📝 Examples](#-examples)
@@ -26,6 +26,7 @@
       - [Break \& Continue](#break--continue)
   - [⚙️ Features](#️-features)
   - [⚠️ Known Limitations](#️-known-limitations)
+    - [✔️ Previously Resolved Limitations](#️-previously-resolved-limitations)
   - [📁 Project Structure](#-project-structure)
   - [🧑‍💻 Development Guide](#-development-guide)
   - [🧾 Commit Message Convention](#-commit-message-convention)
@@ -43,11 +44,10 @@ This project, as of now, is a **subset of JavaBhaiLang**, designed for experimen
 
 ## 🆕 What's New
 
-### v0.4.1
+### v0.5.0
 
-- **Lexer (`Scanner.java`)**: Correctly handle `+` and `+=` operators.
-  - Ensures a `+` token is added when not followed by `=`, instead of mistakenly using `-`.
-- **Interpreter** and **Parser**: Refactored switch-case syntax to modern Java 14+ arrow syntax for cleaner code.
+- **Conditionals**: Added full `agar bhai` (if), `nahi to bhai` (else if), and `warna bhai` (else) support.
+- **Interpreter (`Interpreter.java`)**: Fixed printing of boolean values. `sahi` and `galat` are now printed instead of Java’s `true`/`false`.
 
 ---
 
@@ -175,16 +175,23 @@ bol bhai "Values are:", a, b;
 
 ### Conditionals
 
-This interpreter supports `agar bhai` and `warna bhai` as if-else ladder.
-Does not support `if-else-if` ladder as of now though the syntax is defined.
+This interpreter now supports full if–else-if–else ladders using:
+
+- `agar bhai` → if
+- `nahi to bhai` → else if
+- `warna bhai` → else
 
 ```
-bhai ye hai a = 10;
-agar bhai (a < 20) {
-      bol bhai "a is less than 20";
+bhai ye hai score = 75;
+
+agar bhai (score >= 90) {
+    bol bhai "Topper bhai!";
+} nahi to bhai (score >= 60) {
+    bol bhai "Pass hogaya bhai!";
 } warna bhai {
-      bol bhai "a is greater than or equal to 25";
+    bol bhai "Thoda padh le bhai.";
 }
+
 ```
 
 ### Loops
@@ -253,12 +260,17 @@ bol bhai "Loop finished!";
 
 ## ⚠️ Known Limitations
 
-- `if-else-if` ladder is partially implemented
 - No standard library except built-in print (`bol bhai`)
-- Multi-variable `bol bhai` is now supported
-- Complex assignment operators are now supported (`+=`, `-=`, `*=`, `/=`)
 - Only single-file execution via `run_bhai_lang.py`
-- `bas kar bhai` (break) and `agla dekh bhai` (continue) are now supported
+
+### ✔️ Previously Resolved Limitations
+
+These features were missing earlier but are now fully implemented:
+
+- Full `if–else-if–else` ladder
+- Multi-variable `bol bhai`
+- Complex assignment operators (`+=`, `-=`, `*=`, `/=`)
+- Loop control: `bas kar bhai` (break) & `agla dekh bhai` (continue)
 
 ---
 

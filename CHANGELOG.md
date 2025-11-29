@@ -6,6 +6,18 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ---
 
+## v0.5.0 – 2025-11-29
+
+### ✨ Added
+
+- **if-elseif-else conditionals**: Allows the use of `agar bhai`(if) with `nahi to bhai`(else if) along with `warna bhai`(else).
+
+### 🐞 Fixed
+
+- **Interpreter**: Prints `sahi` and `galat` instead of Java's `true` and `false`, aligning console output with the language's boolean literals.
+
+---
+
 ## v0.4.1 – 2025-11-26
 
 ### 🐞 Fixed
