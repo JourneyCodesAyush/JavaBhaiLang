@@ -3,6 +3,8 @@ package io.github.journeycodesayush.javabhailang.interpreter;
 import static io.github.journeycodesayush.javabhailang.lexer.TokenType.LOGICAL_OR;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import io.github.journeycodesayush.javabhailang.BhaiLang;
 import io.github.journeycodesayush.javabhailang.lexer.Token;
@@ -19,8 +21,14 @@ import io.github.journeycodesayush.javabhailang.parser.*;
  */
 public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
+    /** The global environment for the interpreter. */
+    final Environment globals = new Environment();
+
     /** The current environment for variable storage and scope resolution. */
-    private Environment environment = new Environment();
+    private Environment environment = globals;
+
+    /** A mapping from expressions to their resolved environment distance. */
+    private final Map<Expr, Integer> locals = new HashMap<>();
 
     /**
      * Interprets a list of statements.
@@ -50,6 +58,10 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
      */
     private void execute(Stmt stmt) {
         stmt.accept(this);
+    }
+
+    public void resolve(Expr expr, int depth) {
+        locals.put(expr, depth);
     }
 
     @Override
@@ -159,13 +171,39 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitVariableExpr(Expr.Variable expr) {
-        return environment.get(expr.name);
+        // return environment.get(expr.name);
+        return lookUpVariable(expr.name, expr);
+    }
+
+    /**
+     * Looks up a variable value using its distance in the environment chain.
+     * <p>
+     * Falls back to the global environment if the variable is not found locally.
+     * </p>
+     *
+     * @param name the {@link Token} representing the variable name
+     * @param expr the expression representing the variable
+     * @return the value of the variable
+     */
+    private Object lookUpVariable(Token name, Expr expr) {
+        Integer distance = locals.get(expr);
+        if (distance != null) {
+            return environment.getAt(distance, name.getLexeme());
+        }
+        return globals.get(name);
     }
 
     @Override
     public Object visitAssignExpr(Expr.Assign expr) {
         Object value = evaluate(expr.value);
-        environment.assign(expr.name, value);
+        // environment.assign(expr.name, value);
+
+        Integer distance = locals.get(expr);
+        if (distance != null) {
+            environment.assignAt(distance, expr.name, value);
+        } else {
+            globals.assign(expr.name, value);
+        }
 
         return value;
     }
