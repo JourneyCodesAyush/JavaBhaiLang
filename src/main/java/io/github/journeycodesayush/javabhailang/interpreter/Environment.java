@@ -38,6 +38,25 @@ public class Environment {
     }
 
     /**
+     * Returns the ancestor environment at a specified distance from the current
+     * one.
+     * <p>
+     * Distance 0 refers to the current environment, 1 refers to the immediate
+     * enclosing environment, and so on.
+     * </p>
+     *
+     * @param distance the number of environments to go up
+     * @return the ancestor environment at the specified distance
+     */
+    Environment ancestor(int distance) {
+        Environment environment = this;
+        for (int i = 0; i < distance; i++) {
+            environment = environment.enclosing;
+        }
+        return environment;
+    }
+
+    /**
      * Retrieves the value of a variable from this environment or its enclosing
      * environments.
      *
@@ -57,6 +76,19 @@ public class Environment {
     }
 
     /**
+     * Assigns a value to a variable in an ancestor environment at a specific
+     * distance.
+     *
+     * @param distance the number of environments to go up to find the target
+     *                 environment
+     * @param name     the {@link Token} representing the variable name
+     * @param value    the value to assign
+     */
+    void assignAt(int distance, Token name, Object value) {
+        ancestor(distance).values.put(name.getLexeme(), value);
+    }
+
+    /**
      * Defines a new variable in the current environment.
      * <p>
      * If the variable already exists in this environment, its value will be
@@ -68,6 +100,19 @@ public class Environment {
      */
     void define(String name, Object value) {
         values.put(name, value);
+    }
+
+    /**
+     * Retrieves the value of a variable from an ancestor environment at a
+     * specific distance.
+     *
+     * @param distance the number of environments to go up
+     * @param name     the name of the variable
+     * @return the value of the variable
+     */
+
+    Object getAt(int distance, String name) {
+        return ancestor(distance).values.get(name);
     }
 
     /**
