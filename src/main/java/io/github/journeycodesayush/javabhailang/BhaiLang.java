@@ -3,6 +3,7 @@ package io.github.journeycodesayush.javabhailang;
 import io.github.journeycodesayush.javabhailang.interpreter.*;
 import io.github.journeycodesayush.javabhailang.lexer.*;
 import io.github.journeycodesayush.javabhailang.parser.*;
+import io.github.journeycodesayush.javabhailang.resolver.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -126,6 +127,13 @@ public class BhaiLang {
         if (hadError) {
             return;
         }
+        Resolver resolver = new Resolver(interpreter);
+        resolver.resolve(statements);
+
+        if (hadError) {
+            return;
+        }
+        
         interpreter.interpret(statements);
         // AstPrinter printer = new AstPrinter();
         // for (Stmt statement : statements) {
