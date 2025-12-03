@@ -11,11 +11,32 @@ import io.github.journeycodesayush.javabhailang.parser.Expr;
 import io.github.journeycodesayush.javabhailang.parser.Stmt;
 import io.github.journeycodesayush.javabhailang.interpreter.Interpreter;
 
+/**
+ * Handles static analysis for BhaiLang scripts, including variable scoping,
+ * resolution, and early error detection.
+ * <p>
+ * The Resolver traverses the AST (statements and expressions) before
+ * interpretation, keeping track of variable scopes and informing the
+ * interpreter how many environments to hop to resolve a variable.
+ * </p>
+ */
 public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 
+    /** The interpreter instance that will be informed of resolved variables. */
     private final Interpreter interpreter;
+
+    /**
+     * Stack of scopes, where each scope maps variable names to a boolean indicating
+     * if it's defined.
+     */
     private final Stack<Map<String, Boolean>> scopes = new Stack<>();
 
+    /**
+     * Constructs a Resolver with the given interpreter.
+     *
+     * @param interpreter the interpreter that will be informed of resolved
+     *                    variables
+     */
     public Resolver(Interpreter interpreter) {
         this.interpreter = interpreter;
     }
@@ -136,14 +157,38 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
         return null;
     }
 
+    /**
+     * Begins a new local scope.
+     * <p>
+     * Pushes a new, empty map onto the scope stack. All variables
+     * declared after this call will belong to this scope until
+     * {@link #endScope()} is called.
+     * </p>
+     */
     private void beginScope() {
         scopes.push(new HashMap<String, Boolean>());
     }
 
+    /**
+     * Ends the current local scope.
+     * <p>
+     * Pops the top scope from the stack. Variables declared in this scope
+     * are no longer accessible.
+     * </p>
+     */
     private void endScope() {
         scopes.pop();
     }
 
+    /**
+     * Declares a new variable in the current scope.
+     * <p>
+     * Marks the variable as not yet ready for use. If a variable with the
+     * same name already exists in the current scope, reports an error.
+     * </p>
+     *
+     * @param name the token representing the variable name
+     */
     private void declare(Token name) {
         if (scopes.isEmpty())
             return;
@@ -157,12 +202,32 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
         scope.put(name.getLexeme(), false);
     }
 
+    /**
+     * Defines a variable in the current scope.
+     * <p>
+     * Marks the variable as ready for use. Must be called after any
+     * initializer expression has been resolved.
+     * </p>
+     *
+     * @param name the token representing the variable name
+     */
     private void define(Token name) {
         if (scopes.isEmpty())
             return;
         scopes.peek().put(name.getLexeme(), true);
     }
 
+    /**
+     * Resolves a variable reference to a specific scope.
+     * <p>
+     * Searches the scope stack from innermost to outermost to find the
+     * variable and tells the interpreter how many environments to traverse
+     * to access it.
+     * </p>
+     *
+     * @param expr the variable expression
+     * @param name the token representing the variable name
+     */
     private void resolveLocal(Expr expr, Token name) {
         for (int i = scopes.size() - 1; i >= 0; i--) {
             if (scopes.get(i).containsKey(name.getLexeme())) {
@@ -172,16 +237,34 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
         }
     }
 
+    /**
+     * Resolves a list of statements.
+     * <p>
+     * Traverses each statement in order and applies resolution.
+     * </p>
+     *
+     * @param statements the list of statements to resolve
+     */
     public void resolve(List<Stmt> statements) {
         for (Stmt statement : statements) {
             resolve(statement);
         }
     }
 
+    /**
+     * Resolves a single statement by visiting it.
+     *
+     * @param stmt the statement to resolve
+     */
     private void resolve(Stmt stmt) {
         stmt.accept(this);
     }
 
+    /**
+     * Resolves a single expression by visiting it.
+     *
+     * @param expr the expression to resolve
+     */
     private void resolve(Expr expr) {
         expr.accept(this);
     }
