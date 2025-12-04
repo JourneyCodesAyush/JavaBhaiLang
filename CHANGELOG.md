@@ -6,6 +6,14 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ---
 
+## v0.6.0 – 2025-12-05
+
+### ✨ Added
+
+- **Resolver**: Introduces a variable resolution pass to handle scopes before interpretation.
+
+---
+
 ## v0.5.0 – 2025-11-29
 
 ### ✨ Added

@@ -14,6 +14,7 @@
 - [🖥️ JavaBhaiLang Interpreter](#️-javabhailang-interpreter)
   - [📑 Table of Contents](#-table-of-contents)
   - [🆕 What's New](#-whats-new)
+    - [v0.6.0](#v060)
     - [v0.5.0](#v050)
   - [🏃 Run Locally](#-run-locally)
     - [Steps:](#steps)
@@ -43,6 +44,10 @@ This project, as of now, is a **subset of JavaBhaiLang**, designed for experimen
 ---
 
 ## 🆕 What's New
+
+### v0.6.0
+
+- **Resolver**: Resolves variables and their scopes before interpreting.
 
 ### v0.5.0
 
