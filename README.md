@@ -92,6 +92,17 @@ _TL;DR: Python whispers, Java obeys, Bhai Lang just does whatever it wants._
 
 > ⚠️ **Note**: This is currently experimental and meant for fun and learning purposes.
 
+> ⚠️ **Clarification About the “Hierarchy of Power” Diagram**
+>
+> The diagram above is meant purely for fun.  
+> In reality:
+>
+> - **Python does not control or influence the interpreter.**
+> - It only acts as a **lightweight wrapper script** to compile and run the Java code.
+> - **All actual language processing** (lexing, parsing, resolving, interpreting) happens entirely in **Java**.
+>
+> The hierarchy graphic was included for humor, not as an architectural representation. 😄
+
 ---
 
 ## 🏃 Run Locally
