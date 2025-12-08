@@ -1,6 +1,6 @@
 package io.github.journeycodesayush.javabhailang.interpreter;
 
-import static io.github.journeycodesayush.javabhailang.lexer.TokenType.LOGICAL_OR;
+import static io.github.journeycodesayush.javabhailang.lexer.TokenType.*;
 
 import java.util.List;
 import java.util.Map;
