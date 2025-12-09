@@ -37,6 +37,9 @@ public class BhaiLang {
     /** ANSI color code for green text in the console. */
     private static final String GREEN = "\u001B[32m";
 
+    /** ANSI color code for red text in the console. */
+    private static final String RED = "\u001B[1;91m";
+
     /** ANSI reset code to revert console text color to default. */
     private static final String RESET = "\u001B[0m";
 
@@ -133,7 +136,7 @@ public class BhaiLang {
         if (hadError) {
             return;
         }
-        
+
         interpreter.interpret(statements);
         // AstPrinter printer = new AstPrinter();
         // for (Stmt statement : statements) {
@@ -160,7 +163,7 @@ public class BhaiLang {
      * @param message the error message (String)
      */
     private static void report(int line, String where, String message) {
-        System.err.println("[line " + line + "] Error " + where + ": " + message);
+        System.err.println(RED + "[line " + line + "] Error " + where + ": " + message + RESET);
         hadError = true;
     }
 
@@ -184,7 +187,7 @@ public class BhaiLang {
      * @param error the runtime error (RuntimeError)
      */
     public static void runtimeError(RuntimeError error) {
-        System.err.println(error.getMessage() + "\n[line " + error.token.getLine() + "]");
+        System.err.println(RED + error.getMessage() + RESET + "\n[line " + error.token.getLine() + "]");
         hadRuntimeError = true;
     }
 
@@ -194,7 +197,7 @@ public class BhaiLang {
      * @param error the null pointer exception in BhaiLang (NallaPointerException)
      */
     public static void nallaPointerError(NallaPointerException error) {
-        System.err.println(error.getMessage() + "\n[line " + error.token.getLine()
+        System.err.println(RED + error.getMessage() + RESET + "\n[line " + error.token.getLine()
                 + "] Nalla value pe " + error.token.getLexeme() + " operation allowed nahi hai");
 
     }
