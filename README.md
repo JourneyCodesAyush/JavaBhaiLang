@@ -14,6 +14,7 @@
 - [🖥️ JavaBhaiLang Interpreter](#️-javabhailang-interpreter)
   - [📑 Table of Contents](#-table-of-contents)
   - [🆕 What's New](#-whats-new)
+    - [v0.6.1](#v061)
     - [v0.6.0](#v060)
     - [v0.5.0](#v050)
   - [🏃 Run Locally](#-run-locally)
@@ -30,6 +31,7 @@
     - [✔️ Previously Resolved Limitations](#️-previously-resolved-limitations)
   - [📁 Project Structure](#-project-structure)
   - [🧑‍💻 Development Guide](#-development-guide)
+    - [🧪 Running Tests (v0.6.1)](#-running-tests-v061)
   - [🧾 Commit Message Convention](#-commit-message-convention)
   - [🤝 Contributing](#-contributing)
   - [LICENSE](#license)
@@ -44,6 +46,10 @@ This project, as of now, is a **subset of JavaBhaiLang**, designed for experimen
 ---
 
 ## 🆕 What's New
+
+### v0.6.1
+
+- **Unit Tests**: Unit tests for interpreter now inside `src/test`.
 
 ### v0.6.0
 
@@ -296,14 +302,20 @@ These features were missing earlier but are now fully implemented:
 JavaBhaiLang/
 ├── run_bhai_lang.py                  # Python helper script to compile & run
 ├── src/
-│   └── main/
+│   ├── main/
+│   │   └── java/
+│   │       └── io/github/journeycodesayush/JavaBhaiLang/
+│   │           ├── BhaiLang.java   # Driver code
+│   │           ├── interpreter/    # Interpreter and Exception files
+│   │           ├── lexer/          # Lexer, Token and TokenType
+│   │           ├── parser/         # Parser, Expression and Statement
+│   │           └── tool/           # Generate AST
+│   └── test/
 │       └── java/
 │           └── io/github/journeycodesayush/JavaBhaiLang/
-│               ├── BhaiLang.java   # Driver code
-│               ├── interpreter/    # Interpreter and Exception files
-│               ├── lexer/          # Lexer, Token and TokenType
-│               ├── parser/         # Parser, Expression and Statement
-│               └── tool/           # Generate AST
+│               ├── TestHelper.java
+│               └── InterpreterTest.java
+│
 │
 ├── LICENSE                  # MIT License
 └── README.md                # You're reading it!
@@ -321,6 +333,20 @@ JavaBhaiLang/
 - When adding new grammar rules, statements, or built-in functions, ensure your code is modular and follows the existing patterns in:
   `src/main/java/io/github/journeycodesayush/JavaBhaiLang/`
 - Use the Python helper script (`run_bhai_lang.py`) to quickly test your changes
+
+---
+
+### 🧪 Running Tests (v0.6.1)
+
+- A `src/test` directory has been added in **v0.6.1** to hold unit tests for the interpreter.
+- Tests are written using **JUnit 5** only.
+- Run tests using **Maven**:
+
+> ⚠️ Note: Only JUnit 5 is supported for tests. Running with older JUnit versions may cause failures.
+
+```bash
+mvn test
+```
 
 ---
 

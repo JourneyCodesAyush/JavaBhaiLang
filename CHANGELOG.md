@@ -6,6 +6,14 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ---
 
+## v0.6.1 – 2025-12-11
+
+### 🔧 Added
+
+- Adds `src/test` directory for unit tests and internal testing purposes.
+
+---
+
 ## v0.6.0 – 2025-12-05
 
 ### ✨ Added
