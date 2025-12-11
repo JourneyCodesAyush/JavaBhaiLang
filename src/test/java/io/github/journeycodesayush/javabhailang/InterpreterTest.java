@@ -6,19 +6,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InterpreterTest {
 
-        // Positive tests
         @Test
         public void testPrint() {
                 String output = TestHelper.runAndCaptureOutput("bhai ye hai a = 10; bol bhai a;");
 
-                assertEquals("10" + System.lineSeparator(), output.toString());
+                assertEquals("10" + System.lineSeparator(), output);
         }
 
         @Test
         public void testVariableAssignment() {
                 String output = TestHelper.runAndCaptureOutput("bhai ye hai a = 10; bol bhai a;");
 
-                assertEquals("10" + System.lineSeparator(), output.toString());
+                assertEquals("10" + System.lineSeparator(), output);
         }
 
         @Test
