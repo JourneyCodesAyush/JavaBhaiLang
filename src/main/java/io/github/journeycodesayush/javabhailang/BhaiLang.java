@@ -2,6 +2,7 @@ package io.github.journeycodesayush.javabhailang;
 
 import io.github.journeycodesayush.javabhailang.interpreter.*;
 import io.github.journeycodesayush.javabhailang.lexer.*;
+import io.github.journeycodesayush.javabhailang.output.*;
 import io.github.journeycodesayush.javabhailang.parser.*;
 import io.github.journeycodesayush.javabhailang.resolver.*;
 
@@ -23,7 +24,10 @@ import java.util.List;
 public class BhaiLang {
 
     /** The interpreter instance that executes BhaiLang statements. */
-    private static final Interpreter interpreter = new Interpreter();
+    private static final Interpreter interpreter = new Interpreter(new ConsoleOutput());
+
+    private static final Output output = new ConsoleOutput();
+    private static final Output errorOutput = new ConsoleOutput();
 
     /** Indicates if a syntax or parsing error has occurred. */
     static boolean hadError = false;
@@ -146,6 +150,35 @@ public class BhaiLang {
     }
 
     /**
+     * Executes a string of BhaiLang source code.
+     *
+     * @param source the BhaiLang source code to execute (String)
+     */
+    private static void run(String source, Output output) {
+        Scanner scanner = new Scanner(source);
+        List<Token> tokens = scanner.scanTokens();
+        Parser parser = new Parser(tokens);
+        List<Stmt> statements = parser.parse();
+        Interpreter interpreterWithCustomOutput = new Interpreter(output);
+        if (hadError) {
+            return;
+        }
+        Resolver resolver = new Resolver(interpreterWithCustomOutput);
+        resolver.resolve(statements);
+
+        if (hadError) {
+            return;
+        }
+
+        interpreterWithCustomOutput.interpret(statements);
+        // AstPrinter printer = new AstPrinter();
+        // for (Stmt statement : statements) {
+        // System.out.println(printer.print(statement));
+        // }
+
+    }
+
+    /**
      * Reports a syntax or parsing error at a given line.
      *
      * @param line    the line number where the error occurred (int)
@@ -163,7 +196,11 @@ public class BhaiLang {
      * @param message the error message (String)
      */
     private static void report(int line, String where, String message) {
-        System.err.println(RED + "[line " + line + "] Error " + where + ": " + message + RESET);
+        if (errorOutput instanceof ConsoleOutput) {
+            errorOutput.println(RED + "[line " + line + "] Error " + where + ": " + message + RESET);
+        } else {
+            errorOutput.println("[line " + line + "] Error " + where + ": " + message);
+        }
         hadError = true;
     }
 
@@ -187,7 +224,11 @@ public class BhaiLang {
      * @param error the runtime error (RuntimeError)
      */
     public static void runtimeError(RuntimeError error) {
-        System.err.println(RED + error.getMessage() + RESET + "\n[line " + error.token.getLine() + "]");
+        if (errorOutput instanceof ConsoleOutput) {
+            errorOutput.println(RED + error.getMessage() + RESET + "\n[line " + error.token.getLine() + "]");
+        } else {
+            errorOutput.println(error.getMessage() + "\n[line " + error.token.getLine() + "]");
+        }
         hadRuntimeError = true;
     }
 
@@ -197,8 +238,12 @@ public class BhaiLang {
      * @param error the null pointer exception in BhaiLang (NallaPointerException)
      */
     public static void nallaPointerError(NallaPointerException error) {
-        System.err.println(RED + error.getMessage() + RESET + "\n[line " + error.token.getLine()
-                + "] Nalla value pe " + error.token.getLexeme() + " operation allowed nahi hai");
-
+        if (errorOutput instanceof ConsoleOutput) {
+            errorOutput.println(RED + error.getMessage() + RESET + "\n[line " + error.token.getLine()
+                    + "] Nalla value pe " + error.token.getLexeme() + " operation allowed nahi hai");
+        } else {
+            errorOutput.println(error.getMessage() + "\n[line " + error.token.getLine()
+                    + "] Nalla value pe " + error.token.getLexeme() + " operation allowed nahi hai");
+        }
     }
 }
