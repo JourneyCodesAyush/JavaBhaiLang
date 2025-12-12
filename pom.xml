@@ -5,7 +5,7 @@
 
     <groupId>io.github.journeycodesayush</groupId>
     <artifactId>JavaBhaiLang</artifactId>
-    <version>1.0.0</version>
+    <version>0.0.0</version>
 
     <name>JavaBhaiLang</name>
     <description>A Java interpreter for BhaiLang</description>

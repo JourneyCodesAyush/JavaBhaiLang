@@ -6,9 +6,31 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ---
 
+## v0.7.0 – 2025-12-12
+
+### ✨ Added
+
+- `Output` interface to abstract output handling.
+- `ConsoleOutput` for standard console printing.
+- `StringCollectingOutput` for capturing output in unit tests.
+- `TestHelper` class to run BhaiLang code in tests using reflection.
+- REPL support in `BhaiLang` main class.
+- Ability to run scripts from files via `BhaiLang`.
+
+### 🔧 Changed
+
+- Cross-platform line-ending handling in tests (`\n` compatibility for Linux/macOS).
+
+### Notes
+
+- This release makes the interpreter fully testable with captured output.
+- Prepares the project for future feature additions with a clean testing setup.
+
+---
+
 ## v0.6.1 – 2025-12-11
 
-### 🔧 Added
+### ✨ Added
 
 - Adds `src/test` directory for unit tests and internal testing purposes.
 

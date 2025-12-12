@@ -14,9 +14,7 @@
 - [🖥️ JavaBhaiLang Interpreter](#️-javabhailang-interpreter)
   - [📑 Table of Contents](#-table-of-contents)
   - [🆕 What's New](#-whats-new)
-    - [v0.6.1](#v061)
-    - [v0.6.0](#v060)
-    - [v0.5.0](#v050)
+    - [v0.7.0 Highlights](#v070-highlights)
   - [🏃 Run Locally](#-run-locally)
     - [Steps:](#steps)
   - [📝 Examples](#-examples)
@@ -47,18 +45,12 @@ This project, as of now, is a **subset of JavaBhaiLang**, designed for experimen
 
 ## 🆕 What's New
 
-### v0.6.1
+### v0.7.0 Highlights
 
-- **Unit Tests**: Unit tests for interpreter now inside `src/test`.
-
-### v0.6.0
-
-- **Resolver**: Resolves variables and their scopes before interpreting.
-
-### v0.5.0
-
-- **Conditionals**: Added full `agar bhai` (if), `nahi to bhai` (else if), and `warna bhai` (else) support.
-- **Interpreter (`Interpreter.java`)**: Fixed printing of boolean values. `sahi` and `galat` are now printed instead of Java’s `true`/`false`.
+- Flexible output handling via a new `Output` interface
+  - Standard console printing with `ConsoleOutput`
+  - Capture output in tests using `StringCollectingOutput`
+- `TestHelper` class for easier unit testing
 
 ---
 
