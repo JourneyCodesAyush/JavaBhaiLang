@@ -9,6 +9,7 @@ import java.util.HashMap;
 import io.github.journeycodesayush.javabhailang.BhaiLang;
 import io.github.journeycodesayush.javabhailang.lexer.Token;
 import io.github.journeycodesayush.javabhailang.parser.*;
+import io.github.journeycodesayush.javabhailang.output.*;
 
 /**
  * The core interpreter for BhaiLang programs.
@@ -29,6 +30,37 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     /** A mapping from expressions to their resolved environment distance. */
     private final Map<Expr, Integer> locals = new HashMap<>();
+
+    /**
+     * The output handler for the interpreter.
+     * <p>
+     * All printed output from BhaiLang statements (e.g., print statements) is
+     * delegated to this {@link Output} instance. Hosts can provide custom
+     * implementations to capture, redirect, or display output.
+     * </p>
+     */
+    private final Output output;
+
+    /**
+     * Creates a new interpreter with the specified output handler.
+     *
+     * @param output the {@link Output} implementation used for all print output
+     */
+    public Interpreter(Output output) {
+        this.output = output;
+    }
+
+    /**
+     * Creates a new interpreter with a default output handler.
+     * <p>
+     * The default is {@link ConsoleOutput}, which prints output to the system
+     * console. This constructor provides a simple CLI-friendly interpreter
+     * instance.
+     * </p>
+     */
+    public Interpreter() {
+        this.output = new ConsoleOutput();
+    }
 
     /**
      * Interprets a list of statements.
@@ -238,9 +270,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     public Void visitPrintStmt(Stmt.Print stmt) {
         for (Expr expr : stmt.expressions) {
             Object value = evaluate(expr);
-            System.out.print(stringify(value));
+            output.print(stringify(value));
         }
-        System.out.println();
+        output.println();
         return null;
     }
 
