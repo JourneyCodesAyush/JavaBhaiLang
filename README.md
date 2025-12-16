@@ -15,6 +15,15 @@
   - [📑 Table of Contents](#-table-of-contents)
   - [🆕 What's New](#-whats-new)
     - [v0.7.0 Highlights](#v070-highlights)
+  - [⚡ Quick Install TL;DR](#-quick-install-tldr)
+  - [🚀 Run via JBang (No Repo Clone)](#-run-via-jbang-no-repo-clone)
+    - [Prerequisites](#prerequisites)
+    - [Installer Scripts](#installer-scripts)
+      - [Linux / macOS (Unix shells)](#linux--macos-unix-shells)
+      - [Windows – PowerShell (install.ps1)](#windows--powershell-installps1)
+      - [Windows – Command Prompt (install.bat)](#windows--command-prompt-installbat)
+    - [Using JavaBhaiLang](#using-javabhailang)
+    - [When should you clone the repository?](#when-should-you-clone-the-repository)
   - [🏃 Run Locally](#-run-locally)
     - [Steps:](#steps)
   - [📝 Examples](#-examples)
@@ -103,6 +112,136 @@ _TL;DR: Python whispers, Java obeys, Bhai Lang just does whatever it wants._
 
 ---
 
+## ⚡ Quick Install TL;DR
+
+| Platform               | Quick Install Command                                                                                                                                                                                                                   |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|                        |                                                                                                                                                                                                                                         |
+| **Linux/macOS**        | `bash curl -fsSL https://raw.githubusercontent.com/journeycodesayush/javabhailang/main/install.sh -o install.sh && chmod +x install.sh && ./install.sh --install`                                                                       |
+| **Windows PowerShell** | `powershell Invoke-WebRequest "https://raw.githubusercontent.com/JourneyCodesAyush/javabhailang/main/install.ps1" -OutFile "D:\path\to\script.ps1"; Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; .\script.ps1 --install` |
+| **Windows CMD**        | `cmd curl -L https://raw.githubusercontent.com/JourneyCodesAyush/javabhailang/main/install.bat -o D:\path\to\script.bat && install.bat --install`                                                                                       |
+
+---
+
+## 🚀 Run via JBang (No Repo Clone)
+
+JavaBhaiLang can be executed without cloning the repository using **JBang**.
+This approach is intended for quickly trying the language or running scripts.
+
+> ⚠️ Important
+>
+> - **JBang is required** for all modes
+> - The `bhailang` command is a **JBang alias**, not a standalone executable
+> - **Always** invoke the REPL or scripts via `jbang bhailang`
+> - `--onetime` runs BhaiLang **once without creating an alias**
+> - `--install` creates a **global JBang alias** for repeated use
+> - An active internet connection is required (JBang fetches the latest version from GitHub)
+
+### Prerequisites
+
+- Java (JDK 21+ recommended)
+- [JBang](https://www.jbang.dev/) installed and available in your PATH
+
+### Installer Scripts
+
+Platform-specific installer scripts are provided at the repository root.
+All scripts support the same options:
+
+- `--install` → Create a global JBang alias named `bhailang`
+- `--onetime` → Run BhaiLang once without installing
+- `--uninstall` → Remove the JBang alias
+- `--help` → Show usage information
+
+---
+
+#### Linux / macOS (Unix shells)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/journeycodesayush/javabhailang/main/install.sh -o install.sh
+
+# Give executable permission
+chmod +x install.sh
+
+# Run once
+./install.sh --onetime
+
+# Install alias
+./install.sh --install
+
+# Uninstall alias
+./install.sh --uninstall
+```
+
+#### Windows – PowerShell (install.ps1)
+
+> ⚠️ Windows Users:
+> Avoid downloading the installer directly to the root `C:\` drive.
+> If you choose to do so, proceed at your own risk, as some permissions may prevent script execution.
+> It’s recommended to use a folder like `C:\Users\<YourName>\Downloads` or `C:\Scripts`.
+
+```powershell
+Invoke-WebRequest "https://raw.githubusercontent.com/JourneyCodesAyush/javabhailang/main/install.ps1" -OutFile "D:\path\to\script.ps1"
+```
+
+> ⚠️ PowerShell may block script execution by default.
+> Run this once per terminal session:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+```powershell
+# Run once
+.\install.ps1 --onetime
+
+# Install alias
+.\install.ps1 --install
+
+# Uninstall alias
+.\install.ps1 --uninstall
+```
+
+#### Windows – Command Prompt (install.bat)
+
+> ⚠️ Note: Avoid saving install.bat directly in `C:\` to prevent permission issues.
+
+```cmd
+curl -L https://raw.githubusercontent.com/JourneyCodesAyush/javabhailang/main/install.bat -o D:\path\to\script.bat
+```
+
+```cmd
+:: Run once
+install.bat --onetime
+
+:: Install alias
+install.bat --install
+
+:: Uninstall alias
+install.bat --uninstall
+```
+
+### Using JavaBhaiLang
+
+After installing the alias, always run BhaiLang using JBang:
+
+```bash
+jbang bhailang
+jbang bhailang example.bhai
+```
+
+> ℹ️ Running `bhailang` directly will result in `command not found`.
+> The alias must always be invoked through jbang.
+
+### When should you clone the repository?
+
+- To work offline
+- To modify or extend the interpreter
+- To pin a specific version
+
+In those cases, follow the [🏃 Run Locally](#-run-locally) section below.
+
+---
+
 ## 🏃 Run Locally
 
 You need:
@@ -180,10 +319,10 @@ Use `bol bhai` to print anything to console. Now supports **multiple variables**
 bhai ye hai a = 10;
 bhai ye hai b = 20;
 
-# Single variable
+// Single variable
 bol bhai a;
 
-# Multiple variables
+// Multiple variables
 bol bhai "Values are:", a, b;
 ```
 
@@ -400,3 +539,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 ## 📬 Author
 
 Made with &hearts; by [JourneyCodesAyush](https://github.com/journeycodesayush)
+
+```
+
+```
