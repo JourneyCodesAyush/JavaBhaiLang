@@ -242,7 +242,12 @@ public class Scanner {
                 }
                 line++;
             }
-            case '"' -> string();
+            case '\'' -> {
+                string('\'');
+            }
+            case '"' -> {
+                string('"');
+            }
             default -> {
                 if (isDigit(c))
                     number();
@@ -332,9 +337,11 @@ public class Scanner {
 
     /**
      * Scans a string literal and adds it as a token.
+     * 
+     * @param quote either single quote(') or double quote (")
      */
-    private void string() {
-        while (peek() != '"' && !isAtEnd()) {
+    private void string(char quote) {
+        while (peek() != quote && !isAtEnd()) {
             if (peek() == '\n')
                 line++;
             advance();
