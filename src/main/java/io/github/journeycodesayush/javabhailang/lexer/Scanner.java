@@ -214,8 +214,22 @@ public class Scanner {
                         processWord(wordBuffer.toString());
                         wordBuffer.setLength(0);
                     }
-                    while (!isAtEnd() && peek() != '\n')
+                    while (!isAtEnd() && peek() != '\n') {
                         advance();
+                    }
+                } else if (match('*')) {
+                    if (wordBuffer.length() > 0) {
+                        processWord(wordBuffer.toString());
+                        wordBuffer.setLength(0);
+                    }
+                    while (!isAtEnd() && peek() != '*' && peekNext() != '/') {
+                        if (peek() == '\n') {
+                            line++;
+                        }
+                        advance();
+                    }
+                    advance(); // Consume the '*'
+                    advance();// Consume the '/'
                 } else if (match('='))
                     addToken(SLASH_EQUAL);
                 else
@@ -337,7 +351,7 @@ public class Scanner {
 
     /**
      * Scans a string literal and adds it as a token.
-     * 
+     *
      * @param quote either single quote(') or double quote (")
      */
     private void string(char quote) {
