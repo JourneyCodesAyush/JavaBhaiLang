@@ -1,6 +1,6 @@
 //JAVA 21
 //REPOS https://jitpack.io
-//DEPS com.github.journeycodesayush:javabhailang:v0.7.0
+//DEPS com.github.journeycodesayush:javabhailang:v0.8.0
 //JAVAC_OPTIONS --release 21
 
 import io.github.journeycodesayush.javabhailang.BhaiLang;
