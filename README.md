@@ -14,6 +14,7 @@
 - [🖥️ JavaBhaiLang Interpreter](#️-javabhailang-interpreter)
   - [📑 Table of Contents](#-table-of-contents)
   - [🆕 What's New](#-whats-new)
+    - [v0.8.0 Highlights](#v080-highlights)
     - [v0.7.0 Highlights](#v070-highlights)
   - [⚡ Quick Install TL;DR](#-quick-install-tldr)
   - [🚀 Run via JBang (No Repo Clone)](#-run-via-jbang-no-repo-clone)
@@ -53,6 +54,11 @@ This project, as of now, is a **subset of JavaBhaiLang**, designed for experimen
 ---
 
 ## 🆕 What's New
+
+### v0.8.0 Highlights
+
+- Added support for single-quoted strings, e.g., `'hello'`
+- Added support for multi-line comments using `/* */`
 
 ### v0.7.0 Highlights
 

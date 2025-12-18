@@ -6,6 +6,15 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ---
 
+## v0.8.0 – 2025-12-18
+
+### ✨ Added
+
+- Support for single-quoted strings, e.g., `'hello'`.
+- Support for multi-line comments using `/* */`.
+
+---
+
 ## v0.7.0 – 2025-12-12
 
 ### ✨ Added
