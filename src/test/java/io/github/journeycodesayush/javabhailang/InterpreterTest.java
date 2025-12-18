@@ -14,6 +14,29 @@ public class InterpreterTest {
         }
 
         @Test
+        public void testSingleQuote() {
+                String output = TestHelper.runAndCaptureOutput("bol bhai 'hello bhai log!';");
+
+                assertEquals("hello bhai log!" + System.lineSeparator(), output);
+        }
+
+        @Test
+        public void testDoubleQuote() {
+                String output = TestHelper.runAndCaptureOutput("bol bhai \"hello bhai log!\";");
+
+                assertEquals("hello bhai log!" + System.lineSeparator(), output);
+        }
+
+        @Test
+        public void testMultiLineComment() {
+                String output = TestHelper
+                                .runAndCaptureOutput("/*Multiline string\n was here */ bol bhai 'hello bhai log!';");
+
+                assertEquals("hello bhai log!" + System.lineSeparator(), output);
+
+        }
+
+        @Test
         public void testVariableAssignment() {
                 String output = TestHelper.runAndCaptureOutput("bhai ye hai a = 10; bol bhai a;");
 
