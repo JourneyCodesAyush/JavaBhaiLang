@@ -56,8 +56,26 @@ public class Parser {
      */
     public List<Stmt> parse() {
         List<Stmt> statements = new ArrayList<>();
-        while (!isAtEnd()) {
-            statements.add(declaration());
+        if (!BhaiLang.isRepl) {
+
+            while (!isAtEnd() && !check(HI_BHAI)) {
+                advance();
+            }
+            if (match(HI_BHAI)) {
+                while (!isAtEnd() && !check(BYE_BHAI)) {
+                    statements.add(declaration());
+                }
+                if (!match(BYE_BHAI)) {
+                    error(peek(), "Program must end with 'bye bhai'.");
+                }
+            } else {
+                error(peek(), "Program must start with 'hi bhai'.");
+            }
+        } else {
+            while (!isAtEnd()) {
+                statements.add(declaration());
+            }
+
         }
         return statements;
     }
