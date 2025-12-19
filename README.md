@@ -1,11 +1,22 @@
 # 🖥️ JavaBhaiLang Interpreter
 
-![Java](https://img.shields.io/badge/Java-17-orange)
+![Java](https://img.shields.io/badge/Java-17%2B-orange)
+![JBang](https://img.shields.io/badge/JBang-Java%2021%2B-blue)
 ![Python](https://img.shields.io/badge/Python-3.10-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Version](https://img.shields.io/github/v/tag/JourneyCodesAyush/javabhailang?label=version&color=purple&sort=semver)
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue)
+
+---
+
+<p align="center">
+  <img src="assets/javaIcon.png" width="150"/>
+  <!-- <img src="assets/bhailang.svg" width="120"/> -->
+  <img src="assets/bhaiLangPNG.png" width="550"/>
+</p>
+
+<a href="https://www.flaticon.com/free-icons/webdevelopment" title="webdevelopment icons">Webdevelopment icons created by Alfredo Creates - Flaticon</a>
 
 ---
 
@@ -49,7 +60,7 @@
 
 **JavaBhaiLang** is a minimal, fun programming language interpreter built in **Java**, inspired by _Robert Nystrom’s “[Crafting Interpreters](https://craftinginterpreters.com)”_.
 
-This project, as of now, is a **subset of JavaBhaiLang**, designed for experimentation without diving into full grammar, functions, or advanced features (yet). Future updates may include full JavaBhaiLang support and user-defined functions.
+This project, as of now, is a **subset of [`BhaiLang`](https://bhailang.js.org)**, designed for experimentation without diving into full grammar, functions, or advanced features (yet). Future updates may include full [`BhaiLang`](https://bhailang.js.org) support and user-defined functions.
 
 ---
 
@@ -145,7 +156,8 @@ This approach is intended for quickly trying the language or running scripts.
 
 ### Prerequisites
 
-- Java (JDK 21+ recommended)
+- Java 17+ (required to run the JavaBhaiLang interpreter)
+- Java 21+ (required **only** when using JBang)
 - [JBang](https://www.jbang.dev/) installed and available in your PATH
 
 ### Installer Scripts
@@ -545,7 +557,3 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 ## 📬 Author
 
 Made with &hearts; by [JourneyCodesAyush](https://github.com/journeycodesayush)
-
-```
-
-```
