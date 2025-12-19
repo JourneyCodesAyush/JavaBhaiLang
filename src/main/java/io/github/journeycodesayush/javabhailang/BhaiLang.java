@@ -26,7 +26,10 @@ public class BhaiLang {
     /** The interpreter instance that executes BhaiLang statements. */
     private static final Interpreter interpreter = new Interpreter(new ConsoleOutput());
 
+    /** Indicates the channel where output flows */
     private static final Output output = new ConsoleOutput();
+
+    /** Indicates the channel where error messages flows */
     private static final Output errorOutput = new ConsoleOutput();
 
     /** Indicates if a syntax or parsing error has occurred. */
@@ -34,6 +37,9 @@ public class BhaiLang {
 
     /** Indicates if a runtime error has occurred during interpretation. */
     static boolean hadRuntimeError = false;
+
+    /** Indicates if a .bhai file is running or REPL */
+    public static boolean isRepl = false;
 
     /** ANSI color code for cyan text in the console. */
     private static final String CYAN = "\u001B[36m";
@@ -56,11 +62,13 @@ public class BhaiLang {
      */
     public static void main(String[] args) throws IOException {
         if (args.length > 1) {
-            System.out.println("Usage: jlox [script]");
+            System.out.println("Usage: javabhailang [script]");
             System.exit(64);
         } else if (args.length == 1) {
+            isRepl = false;
             runFile(args[0]);
         } else {
+            isRepl = true;
             runPrompt();
         }
     }
@@ -106,6 +114,7 @@ public class BhaiLang {
                 + RESET);
 
         System.out.println(CYAN + "Welcome to the BhaiLang REPL (Java version)!" + RESET);
+        System.out.println(CYAN + "JavabhaiLang v0.9.0-final - https://github.com/yourusername/JavabhaiLang" + RESET);
         System.out.println("Type something and press Enter. Type 'exit' to quit.\n");
 
         while (true) {
