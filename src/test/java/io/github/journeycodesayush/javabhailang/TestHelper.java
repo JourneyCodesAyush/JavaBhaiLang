@@ -20,6 +20,8 @@ public class TestHelper {
 
         BhaiLang.hadError = false;
         BhaiLang.hadRuntimeError = false;
+        boolean isOriginalRepl = BhaiLang.isRepl;
+        BhaiLang.isRepl = true; // Tests always run in REPL mode
 
         StringCollectingOutput output = new StringCollectingOutput();
 
@@ -29,6 +31,9 @@ public class TestHelper {
             runMethod.invoke(null, source, output);
         } catch (Exception e) {
             throw new RuntimeException("Failed to run BhaiLang code", e);
+        } finally {
+            // Restore original isRepl value
+            BhaiLang.isRepl = isOriginalRepl;
         }
 
         return output.toString().replace("\r\n", "\n").replace("\n", System.lineSeparator());
