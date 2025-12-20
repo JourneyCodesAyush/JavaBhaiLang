@@ -268,9 +268,18 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitPrintStmt(Stmt.Print stmt) {
-        for (Expr expr : stmt.expressions) {
-            Object value = evaluate(expr);
+        if (stmt.expressions.size() == 1) {
+            Object value = evaluate(stmt.expressions.getFirst());
             output.print(stringify(value));
+        } else {
+            StringBuilder outputs = new StringBuilder();
+            for (Expr expr : stmt.expressions) {
+                Object value = evaluate(expr);
+                // output.print(stringify(value) + " ");
+                outputs.append(stringify(value)).append(" ");
+            }
+            // output.print("\b");
+            output.print(outputs.toString().trim());
         }
         output.println();
         return null;
