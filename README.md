@@ -5,8 +5,8 @@
 ![Python](https://img.shields.io/badge/Python-3.10-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Version](https://img.shields.io/github/v/tag/JourneyCodesAyush/javabhailang?label=version&color=purple&sort=semver)
-![Status](https://img.shields.io/badge/status-active-brightgreen)
-![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue)
+![Status](https://img.shields.io/badge/status-feature--complete-teal)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-lightgrey)
 
 ---
 
@@ -25,8 +25,9 @@
 - [🖥️ JavaBhaiLang Interpreter](#️-javabhailang-interpreter)
   - [📑 Table of Contents](#-table-of-contents)
   - [🆕 What's New](#-whats-new)
+    - [v0.9.0-final Highlights](#v090-final-highlights)
     - [v0.8.0 Highlights](#v080-highlights)
-    - [v0.7.0 Highlights](#v070-highlights)
+    - [⚠️ Differences from Original BhaiLang](#️-differences-from-original-bhailang)
   - [⚡ Quick Install TL;DR](#-quick-install-tldr)
   - [🚀 Run via JBang (No Repo Clone)](#-run-via-jbang-no-repo-clone)
     - [Prerequisites](#prerequisites)
@@ -55,28 +56,40 @@
   - [🤝 Contributing](#-contributing)
   - [LICENSE](#license)
   - [📬 Author](#-author)
+    - [❤️ Closure](#️-closure)
 
 ---
 
 **JavaBhaiLang** is a minimal, fun programming language interpreter built in **Java**, inspired by _Robert Nystrom’s “[Crafting Interpreters](https://craftinginterpreters.com)”_.
 
-This project, as of now, is a **subset of [`BhaiLang`](https://bhailang.js.org)**, designed for experimentation without diving into full grammar, functions, or advanced features (yet). Future updates may include full [`BhaiLang`](https://bhailang.js.org) support and user-defined functions.
+> ⚡ JavaBhaiLang is now feature-complete (v0.9.0-final) - no new features planned.
+
+This project, as of now, fully supports **[`BhaiLang`](https://bhailang.js.org)**, designed for experimentation without diving into full grammar, functions, or advanced features.
 
 ---
 
 ## 🆕 What's New
+
+### v0.9.0-final Highlights
+
+- Parser now executes statements **between `hi bhai` and `bye bhai` only for file execution**.
+- REPL executes all statements without restriction.
+- REPL startup shows version number and GitHub repository link.
+- **Print statements now insert implicit spaces between multiple expressions**, aligning with original BhaiLang behavior.
 
 ### v0.8.0 Highlights
 
 - Added support for single-quoted strings, e.g., `'hello'`
 - Added support for multi-line comments using `/* */`
 
-### v0.7.0 Highlights
+---
 
-- Flexible output handling via a new `Output` interface
-  - Standard console printing with `ConsoleOutput`
-  - Capture output in tests using `StringCollectingOutput`
-- `TestHelper` class for easier unit testing
+### ⚠️ Differences from Original BhaiLang
+
+| Feature / Behavior                        | Original BhaiLang               | JavaBhaiLang (v0.9.0-final)                                                                                                         |
+| ----------------------------------------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Error reporting                           | Basic, line number may not show | Shows **line number** for easier debugging                                                                                          |
+| Statements outside `hi bhai ... bye bhai` | Allowed and ignored             | **Throws an error** - Java version scans **character by character**, so extra statements beyond `hi bhai ... bye bhai` are detected |
 
 ---
 
@@ -322,6 +335,7 @@ Numbers and Strings like other well known languages. Null values denoted by `nal
 ```
 
 bhai ye hai string = "hello bhai";
+bhai ye hai doosra_string = 'hello bhai';
 bhai ye hai number = 14.0;
 bhai ye hai boolean_value_true = sahi;
 bhai ye hai boolean_value_false = galat;
@@ -487,6 +501,10 @@ JavaBhaiLang/
 
 ### 🧪 Running Tests (v0.6.1)
 
+> ⚠️ **Java Version Requirement**
+>
+> Running tests and building the project with **Maven requires Java 21 or newer**.
+
 - A `src/test` directory has been added in **v0.6.1** to hold unit tests for the interpreter.
 - Tests are written using **JUnit 5** only.
 - Run tests using **Maven**:
@@ -557,3 +575,21 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 ## 📬 Author
 
 Made with &hearts; by [JourneyCodesAyush](https://github.com/journeycodesayush)
+
+---
+
+Your closure is already strong and personal — just a few **minimal tweaks** to improve flow, readability, and grammar, while keeping your tone intact:
+
+---
+
+### ❤️ Closure
+
+JavaBhaiLang is **feature-complete** as of the v0.9.0-final tag and will not receive new features in the near future.
+This project taught me about Lexer, Parser, Interpreter, Abstract Syntax Tree (AST), Resolver, Environments, and most importantly, that **doing something consistently is where the fun lies**.
+
+While building this, I aimed to make it as compatible with the original implementation as possible, but some stones are surely left unturned. I am **not abandoning this project** - it remains a symbol that I studied [`Crafting Interpreters`](https://craftinginterpreters.com) and actually learned from it.
+This repo stands as proof that I have the **resilience to read a book and create something meaningful**.
+
+Iska arth ye nahi ki _Bhai_ ki kahani yahi tak thi.
+
+Yaha se _Bhai_ ke jeevan ka **`naya adhyay shuru hone ja raha hai!`**

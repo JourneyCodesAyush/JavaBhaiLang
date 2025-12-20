@@ -6,6 +6,23 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ---
 
+## v0.9.0-final – 2025-12-20
+
+### ✨ Added
+
+- `isRepl` flag in main driver code to distinguish between REPL and file execution.
+- Parser now executes statements **between `hi bhai` and `bye bhai` only for file execution**.
+- REPL executes all statements without restriction.
+- REPL startup now shows version number and GitHub repository link.
+
+### 🔧 Changed
+
+- Better alignment with original BhaiLang implementation while maintaining stricter lexer.
+- **Print statements now insert implicit spaces between multiple expressions**, aligning with original BhaiLang behavior.
+- Updated corresponding **tests** to reflect the new print spacing.
+
+---
+
 ## v0.8.0 – 2025-12-18
 
 ### ✨ Added
