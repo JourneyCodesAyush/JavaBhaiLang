@@ -88,8 +88,7 @@ public class InterpreterTest {
 
         @Test
         public void testIfElseIf() {
-                String output = TestHelper.runAndCaptureOutput("bhai ye hai score = 75;\r\n" + //
-                                "\r\n" + //
+                String output = TestHelper.runAndCaptureOutput("bhai ye hai score = 75;" +
                                 "agar bhai (score >= 90) {" +
                                 "    bol bhai \"Topper bhai!\";" +
                                 "} nahi to bhai (score >= 60) {" +
@@ -156,7 +155,7 @@ public class InterpreterTest {
                                                 "b /= 3;" + // b = 1
                                                 "bol bhai a, b;");
 
-                assertEquals("391" + System.lineSeparator(), output);
+                assertEquals("39 1" + System.lineSeparator(), output);
         }
 
         @Test
@@ -166,7 +165,7 @@ public class InterpreterTest {
                                                 "bhai ye hai b = 10;" +
                                                 "bol bhai \"The values are:\", a, b;");
 
-                assertEquals("The values are:510" + System.lineSeparator(), output);
+                assertEquals("The values are: 5 10" + System.lineSeparator(), output);
         }
 
         @Test
@@ -177,7 +176,7 @@ public class InterpreterTest {
                                                 "bhai ye hai n = nalla;" +
                                                 "bol bhai t, f, n;");
 
-                assertEquals("sahigalatnalla" + System.lineSeparator(), output);
+                assertEquals("sahi galat nalla" + System.lineSeparator(), output);
         }
 
         @Test
