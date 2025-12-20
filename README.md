@@ -4,7 +4,7 @@
 ![JBang](https://img.shields.io/badge/JBang-Java%2021%2B-blue)
 ![Python](https://img.shields.io/badge/Python-3.10-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Version](https://img.shields.io/github/v/tag/JourneyCodesAyush/javabhailang?label=version&color=purple&sort=semver)
+![Version](https://img.shields.io/github/v/tag/JourneyCodesAyush/javabhailang?label=version&color=purple)
 ![Status](https://img.shields.io/badge/status-feature--complete-teal)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-lightgrey)
 
