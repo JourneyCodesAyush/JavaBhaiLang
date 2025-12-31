@@ -41,6 +41,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
      */
     private final Output output;
 
+    private int loopDepth = 0;
+
     /**
      * Creates a new interpreter with the specified output handler.
      *
@@ -303,25 +305,37 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitWhileStmt(Stmt.While stmt) {
-        while (isTruthy(evaluate(stmt.condition))) {
-            try {
-                execute(stmt.body);
-            } catch (ContinueException e) {
-                continue;
-            } catch (BreakException e) {
-                break;
+        loopDepth++;
+        try {
+
+            while (isTruthy(evaluate(stmt.condition))) {
+                try {
+                    execute(stmt.body);
+                } catch (ContinueException e) {
+                    continue;
+                } catch (BreakException e) {
+                    break;
+                }
             }
+        } finally {
+            loopDepth--;
         }
         return null;
     }
 
     @Override
     public Void visitBreakStmt(Stmt.Break stmt) {
+        if (loopDepth == 0) {
+            throw new RuntimeError(stmt.keyword, "Cannot use 'bas kar bhai' outside loop");
+        }
         throw new BreakException();
     }
 
     @Override
     public Void visitContinueStmt(Stmt.Continue stmt) {
+        if (loopDepth == 0) {
+            throw new RuntimeError(stmt.keyword, "Cannot use 'agla dekh bhai' outside loop");
+        }
         throw new ContinueException();
     }
 
