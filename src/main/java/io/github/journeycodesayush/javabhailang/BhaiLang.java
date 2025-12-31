@@ -114,7 +114,7 @@ public class BhaiLang {
                 + RESET);
 
         System.out.println(CYAN + "Welcome to the BhaiLang REPL (Java version)!" + RESET);
-        System.out.println(CYAN + "JavabhaiLang v0.9.0-final - https://github.com/yourusername/JavabhaiLang" + RESET);
+        System.out.println(CYAN + "JavabhaiLang v0.10.0 - https://github.com/journeycodesayush/JavabhaiLang" + RESET);
         System.out.println("Type something and press Enter. Type 'exit' to quit.\n");
 
         while (true) {
