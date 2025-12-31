@@ -355,6 +355,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         if (object == null) {
             return false;
         }
+        if (object instanceof Number) {
+            return ((Number) object).doubleValue() != 0;
+        }
         if (object instanceof Boolean) {
             return (Boolean) object;
         }
