@@ -53,8 +53,8 @@ public class GenerateAst {
                 "Print       : List<Expr> expressions",
                 "Var         : Token name, Expr initializer",
                 "While       : Expr condition, Stmt body",
-                "Break       : ",
-                "Continue    : "));
+                "Break       : Token keyword",
+                "Continue    : Token keyword"));
     }
 
     /**

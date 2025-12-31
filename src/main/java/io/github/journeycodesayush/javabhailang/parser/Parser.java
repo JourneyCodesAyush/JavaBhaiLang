@@ -129,12 +129,14 @@ public class Parser {
             return whileStatement();
         }
         if (match(BAS_KAR_BHAI)) {
+            Token keyword = previous();
             consume(SEMICOLON, "Expect ';' after 'bas kar bhai'.");
-            return new Stmt.Break();
+            return new Stmt.Break(keyword);
         }
         if (match(AGLA_DEKH_BHAI)) {
+            Token keyword = previous();
             consume(SEMICOLON, "Expect ';' after 'agla dekh bhai'.");
-            return new Stmt.Continue();
+            return new Stmt.Continue(keyword);
         }
         if (match(LEFT_CURLY_BRACE))
             return new Stmt.Block(block());
