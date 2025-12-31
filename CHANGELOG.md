@@ -6,6 +6,31 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ---
 
+## v0.10.0 – 2025-12-31
+
+### ✨ Added
+
+- **Truthiness & Falsiness Handling**:
+
+  - Numbers: `0` is falsey, non-zero (positive or negative) is truthy.
+  - Booleans: `sahi` → truthy, `galat` → falsey.
+  - `nalla` → falsey.
+  - Strings: empty and non-empty strings are truthy.
+
+- **Break & Continue Statements**:
+  - Added `Token` tracking to **report runtime errors if used outside loops**.
+
+### 🧪 Tests
+
+- Added unit tests for truthiness, falsiness, and logical NOT operations.
+
+### 🔧 Changed
+
+- Parser and AST updated to include `Token` in `Break` and `Continue` nodes for improved error reporting.
+- Interpreter now throws `RuntimeError` with token reference when `break` or `continue` is used outside loops.
+
+---
+
 ## v0.9.0-final – 2025-12-20
 
 ### ✨ Added

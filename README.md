@@ -25,8 +25,8 @@
 - [🖥️ JavaBhaiLang Interpreter](#️-javabhailang-interpreter)
   - [📑 Table of Contents](#-table-of-contents)
   - [🆕 What's New](#-whats-new)
+    - [v0.10.0 Highlights](#v0100-highlights)
     - [v0.9.0-final Highlights](#v090-final-highlights)
-    - [v0.8.0 Highlights](#v080-highlights)
     - [⚠️ Differences from Original BhaiLang](#️-differences-from-original-bhailang)
   - [⚡ Quick Install TL;DR](#-quick-install-tldr)
   - [🚀 Run via JBang (No Repo Clone)](#-run-via-jbang-no-repo-clone)
@@ -46,6 +46,7 @@
     - [Conditionals](#conditionals)
     - [Loops](#loops)
       - [Break \& Continue](#break--continue)
+  - [📚 Language Reference](#-language-reference)
   - [⚙️ Features](#️-features)
   - [⚠️ Known Limitations](#️-known-limitations)
     - [✔️ Previously Resolved Limitations](#️-previously-resolved-limitations)
@@ -70,17 +71,21 @@ This project, as of now, fully supports **[`BhaiLang`](https://bhailang.js.org)*
 
 ## 🆕 What's New
 
+### v0.10.0 Highlights
+
+- Numbers: `0` is falsey, all non-zero numbers are truthy.
+- Booleans: `sahi` → truthy, `galat` → falsey.
+- `nalla` → falsey.
+- Strings: empty and non-empty strings are truthy.
+- Runtime errors now report token positions if `bas kar bhai` or `agla dekh bhai` are used outside loops.
+- Unit tests for truthiness, falsiness, and logical NOT operations.
+
 ### v0.9.0-final Highlights
 
 - Parser now executes statements **between `hi bhai` and `bye bhai` only for file execution**.
 - REPL executes all statements without restriction.
 - REPL startup shows version number and GitHub repository link.
 - **Print statements now insert implicit spaces between multiple expressions**, aligning with original BhaiLang behavior.
-
-### v0.8.0 Highlights
-
-- Added support for single-quoted strings, e.g., `'hello'`
-- Added support for multi-line comments using `/* */`
 
 ---
 
@@ -427,6 +432,12 @@ jab tak bhai (counter < 10) {
 
 bol bhai "Loop finished!";
 ```
+
+---
+
+## 📚 Language Reference
+
+For the full BhaiLang language specification, see the [BhaiLang Language Docs](https://github.com/JourneyCodesAyush/TS-Bhai/blob/main/docs/language.md).
 
 ---
 
