@@ -1,4 +1,4 @@
-# 📄 Changelog
+# Changelog
 
 All notable changes to this project will be documented in this file.
 
@@ -8,7 +8,7 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## v0.10.0 – 2025-12-31
 
-### ✨ Added
+### Added
 
 - **Truthiness & Falsiness Handling**:
 
@@ -20,11 +20,11 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - **Break & Continue Statements**:
   - Added `Token` tracking to **report runtime errors if used outside loops**.
 
-### 🧪 Tests
+### Tests
 
 - Added unit tests for truthiness, falsiness, and logical NOT operations.
 
-### 🔧 Changed
+### Changed
 
 - Parser and AST updated to include `Token` in `Break` and `Continue` nodes for improved error reporting.
 - Interpreter now throws `RuntimeError` with token reference when `break` or `continue` is used outside loops.
@@ -33,14 +33,14 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## v0.9.0-final – 2025-12-20
 
-### ✨ Added
+### Added
 
 - `isRepl` flag in main driver code to distinguish between REPL and file execution.
 - Parser now executes statements **between `hi bhai` and `bye bhai` only for file execution**.
 - REPL executes all statements without restriction.
 - REPL startup now shows version number and GitHub repository link.
 
-### 🔧 Changed
+### Changed
 
 - Better alignment with original BhaiLang implementation while maintaining stricter lexer.
 - **Print statements now insert implicit spaces between multiple expressions**, aligning with original BhaiLang behavior.
@@ -50,7 +50,7 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## v0.8.0 – 2025-12-18
 
-### ✨ Added
+### Added
 
 - Support for single-quoted strings, e.g., `'hello'`.
 - Support for multi-line comments using `/* */`.
@@ -59,7 +59,7 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## v0.7.0 – 2025-12-12
 
-### ✨ Added
+### Added
 
 - `Output` interface to abstract output handling.
 - `ConsoleOutput` for standard console printing.
@@ -68,7 +68,7 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - REPL support in `BhaiLang` main class.
 - Ability to run scripts from files via `BhaiLang`.
 
-### 🔧 Changed
+### Changed
 
 - Cross-platform line-ending handling in tests (`\n` compatibility for Linux/macOS).
 
@@ -81,7 +81,7 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## v0.6.1 – 2025-12-11
 
-### ✨ Added
+### Added
 
 - Adds `src/test` directory for unit tests and internal testing purposes.
 
@@ -89,7 +89,7 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## v0.6.0 – 2025-12-05
 
-### ✨ Added
+### Added
 
 - **Resolver**: Introduces a variable resolution pass to handle scopes before interpretation.
 
@@ -97,11 +97,11 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## v0.5.0 – 2025-11-29
 
-### ✨ Added
+### Added
 
 - **if-elseif-else conditionals**: Allows the use of `agar bhai`(if) with `nahi to bhai`(else if) along with `warna bhai`(else).
 
-### 🐞 Fixed
+### Fixed
 
 - **Interpreter**: Prints `sahi` and `galat` instead of Java's `true` and `false`, aligning console output with the language's boolean literals.
 
@@ -109,12 +109,12 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## v0.4.1 – 2025-11-26
 
-### 🐞 Fixed
+### Fixed
 
 - **Lexer (`Scanner.java`)**: Correctly handle `+` and `+=` operators.
   - Ensures a `+` token is added when not followed by `=`, instead of mistakenly using `-`.
 
-### 🔧 Changed
+### Changed
 
 - **Interpreter** and **Parser**: Refactored switch-case syntax to modern Java 14+ arrow syntax for cleaner code.
 
@@ -122,7 +122,7 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## v0.4.0 – 2025-11-24
 
-### ✨ Added
+### Added
 
 - **Complex assignment operators**: Added support for `+=`, `-=`, `*=`, `/=` in the interpreter for arithmetic expressions.
 
@@ -130,7 +130,7 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## v0.3.0 – 2025-11-23
 
-### ✨ Added
+### Added
 
 - **Parser**: Supports multiple variables in `bol bhai` (print) statement.
 - **Interpreter**: Can now evaluate and print multiple expressions in a single statement.
@@ -140,7 +140,7 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## v0.2.0 – 2025-11-22
 
-### ✨ Added
+### Added
 
 - **Loop control statements**:
   - `bas kar bhai` → break
@@ -151,7 +151,7 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## v0.1.0 – 2025-11-16
 
-### ✨ Added
+### Added
 
 - Initial unstable release.
 - Supports variable declaration, print statements, conditionals, and loops.
