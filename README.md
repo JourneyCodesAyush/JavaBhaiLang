@@ -282,8 +282,11 @@ In those cases, follow the [🏃 Run Locally](#-run-locally) section below.
 
 You need:
 
-- **Java** (any recent version, 2-3 years old also works)
-- **Python** (for the helper script that compiles and runs JavaBhaiLang)
+- **Java**
+  - **Java 17+** → run interpreter locally
+  - **Java 21+** → JBang + Maven tests
+- **Python**
+  - Used for the helper script (`run_bhai_lang.py`) that compiles and runs JavaBhaiLang
 
 ### Steps:
 
@@ -330,7 +333,7 @@ b -= 2;   // Equivalent to: b = b - 2
 a *= b;   // Equivalent to: a = a * b
 b /= 3;   // Equivalent to: b = b / 3
 
-bol bhai a, b;  # Prints the updated values
+bol bhai a, b;  // Prints the updated values
 ```
 
 ### Types
@@ -586,10 +589,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 ## 📬 Author
 
 Made with &hearts; by [JourneyCodesAyush](https://github.com/journeycodesayush)
-
----
-
-Your closure is already strong and personal — just a few **minimal tweaks** to improve flow, readability, and grammar, while keeping your tone intact:
 
 ---
 
