@@ -1,6 +1,6 @@
 # 🖥️ JavaBhaiLang Interpreter
 
-![Java](https://img.shields.io/badge/Java-17%2B-orange)
+![Java](https://img.shields.io/badge/Java-21%2B-orange)
 ![JBang](https://img.shields.io/badge/JBang-Java%2021%2B-blue)
 ![Python](https://img.shields.io/badge/Python-3.10-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -174,8 +174,7 @@ This approach is intended for quickly trying the language or running scripts.
 
 ### Prerequisites
 
-- Java 17+ (required to run the JavaBhaiLang interpreter)
-- Java 21+ (required **only** when using JBang)
+- Java 21+
 - [JBang](https://www.jbang.dev/) installed and available in your PATH
 
 ### Installer Scripts
@@ -282,9 +281,7 @@ In those cases, follow the [🏃 Run Locally](#-run-locally) section below.
 
 You need:
 
-- **Java**
-  - **Java 17+** → run interpreter locally
-  - **Java 21+** → JBang + Maven tests
+- **Java 21**
 - **Python**
   - Used for the helper script (`run_bhai_lang.py`) that compiles and runs JavaBhaiLang
 
