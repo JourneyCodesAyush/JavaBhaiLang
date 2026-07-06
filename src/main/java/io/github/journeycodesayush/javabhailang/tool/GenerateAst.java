@@ -6,167 +6,172 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Utility tool to automatically generate abstract syntax tree (AST) classes
- * for a programming language.
+ * Utility tool to automatically generate abstract syntax tree (AST) classes for a programming
+ * language.
  *
- * <p>
- * Generates Java source files for a base AST class (like Expr or Stmt) and
- * its derived node classes, each implementing the visitor pattern.
- * The generated classes include constructors, final fields, and accept()
- * methods for visitor traversal.
- * </p>
+ * <p>Generates Java source files for a base AST class (like Expr or Stmt) and its derived node
+ * classes, each implementing the visitor pattern. The generated classes include constructors, final
+ * fields, and accept() methods for visitor traversal.
  *
- * <p>
- * This class is intended to be run from the command line with a single
- * argument specifying the output directory for the generated files.
- * </p>
+ * <p>This class is intended to be run from the command line with a single argument specifying the
+ * output directory for the generated files.
  */
 public class GenerateAst {
 
-    /**
-     * Entry point for the AST generation tool.
-     * <p>
-     * Expects a single argument: the output directory for the generated AST files.
-     * </p>
-     *
-     * @param args command-line arguments; args[0] must be the output directory
-     * @throws IOException if writing to a file fails
-     */
-    public static void main(String[] args) throws IOException {
-        if (args.length != 1) {
-            System.err.println("Usage generate_ast <output directory>");
-            System.exit(64);
-        }
-        String outputDir = args[0];
-        defineAst(outputDir, "Expr", Arrays.asList(
-                "Assign : Token name, Expr value",
-                "Binary : Expr left, Token operator, Expr right",
-                "Grouping    : Expr expression",
-                "Literal     : Object value",
-                "Logical     : Expr left, Token operator, Expr right",
-                "Unary       : Token operator, Expr right",
-                "Variable    : Token name"));
-        defineAst(outputDir, "Stmt", Arrays.asList(
-                "Block  : List<Stmt> statements    ",
-                "Expression  : Expr expression",
-                "If          : Expr condition, Stmt thenBranch, List<Expr> elseIfConditions, List<Stmt> elseIfBranches, Stmt elseBranch",
-                "Print       : List<Expr> expressions",
-                "Var         : Token name, Expr initializer",
-                "While       : Expr condition, Stmt body",
-                "Break       : Token keyword",
-                "Continue    : Token keyword"));
+  /**
+   * Entry point for the AST generation tool.
+   *
+   * <p>Expects a single argument: the output directory for the generated AST files.
+   *
+   * @param args command-line arguments; args[0] must be the output directory
+   * @throws IOException if writing to a file fails
+   */
+  public static void main(String[] args) throws IOException {
+    if (args.length != 1) {
+      System.err.println("Usage generate_ast <output directory>");
+      System.exit(64);
+    }
+    String outputDir = args[0];
+    defineAst(
+        outputDir,
+        "Expr",
+        Arrays.asList(
+            "Assign : Token name, Expr value",
+            "Binary : Expr left, Token operator, Expr right",
+            "Grouping    : Expr expression",
+            "Literal     : Object value",
+            "Logical     : Expr left, Token operator, Expr right",
+            "Unary       : Token operator, Expr right",
+            "Variable    : Token name"));
+    defineAst(
+        outputDir,
+        "Stmt",
+        Arrays.asList(
+            "Block  : List<Stmt> statements    ",
+            "Expression  : Expr expression",
+            "If          : Expr condition, Stmt thenBranch, List<Expr> elseIfConditions, List<Stmt> elseIfBranches, Stmt elseBranch",
+            "Print       : List<Expr> expressions",
+            "Var         : Token name, Expr initializer",
+            "While       : Expr condition, Stmt body",
+            "Break       : Token keyword",
+            "Continue    : Token keyword"));
+  }
+
+  /**
+   * Generates an AST Java file for a given base class and its derived types.
+   *
+   * @param outputDir the directory where the generated file will be saved
+   * @param baseName the name of the base AST class (e.g., "Expr" or "Stmt")
+   * @param types a list of strings defining derived classes and their fields
+   * @throws IOException if writing to the file fails
+   */
+  private static void defineAst(String outputDir, String baseName, List<String> types)
+      throws IOException {
+    String path = outputDir + "/" + baseName + ".java";
+    PrintWriter writer = new PrintWriter(path, "UTF-8");
+
+    writer.println("/**");
+    writer.println(" * Abstract syntax tree (AST) node definitions for " + baseName + ".");
+    writer.println(" * <p>");
+    writer.println(" * Auto-generated by tool/GenerateAst.java. Do NOT edit manually.");
+    writer.println(" * </p>");
+    writer.println(" */");
+
+    writer.println("package io.github.journeycodesayush.javabhailang.parser;");
+    writer.println();
+    // writer.println("import
+    // io.github.journeycodesayush.javabhailang.lexer.Scanner;");
+    writer.println("import io.github.journeycodesayush.javabhailang.lexer.Token;");
+
+    writer.println("import java.util.List;");
+    writer.println();
+    writer.println("public abstract class " + baseName + "{");
+
+    defineVisitor(writer, baseName, types);
+
+    // The AST classes
+    for (String type : types) {
+      String className = type.split(":")[0].trim();
+      String fields = type.split(":")[1].trim();
+      defineType(writer, baseName, className, fields);
+    }
+    writer.println();
+    writer.println("    public abstract <R> R accept(Visitor<R> visitor);");
+    writer.println("}");
+    writer.close();
+  }
+
+  /**
+   * Defines a concrete AST node class inside a base class.
+   *
+   * <p>Generates the class declaration, fields, constructor, and accept() method for the visitor
+   * pattern.
+   *
+   * @param writer the PrintWriter used to write the file
+   * @param baseName the base class name
+   * @param className the concrete AST node class name
+   * @param fieldList a comma-separated list of fields for the class
+   */
+  private static void defineType(
+      PrintWriter writer, String baseName, String className, String fieldList) {
+    writer.println("  public static class " + className + " extends " + baseName + " {");
+
+    // Constructor
+    writer.println("    public " + className + "(" + fieldList + ") {");
+
+    if (!fieldList.isEmpty()) {
+      String[] fields = fieldList.split(", ");
+      for (String field : fields) {
+        String name = field.split((" "))[1];
+        writer.println("     this." + name + " = " + name + ";");
+      }
+
+      writer.println("}");
+      for (String field : fields) {
+        writer.println("     public final " + field + ";");
+      }
+    } else {
+      writer.println("}");
     }
 
-    /**
-     * Generates an AST Java file for a given base class and its derived types.
-     *
-     * @param outputDir the directory where the generated file will be saved
-     * @param baseName  the name of the base AST class (e.g., "Expr" or "Stmt")
-     * @param types     a list of strings defining derived classes and their fields
-     * @throws IOException if writing to the file fails
-     */
-    private static void defineAst(String outputDir, String baseName, List<String> types) throws IOException {
-        String path = outputDir + "/" + baseName + ".java";
-        PrintWriter writer = new PrintWriter(path, "UTF-8");
+    writer.println();
+    writer.println("    @Override");
+    writer.println("    public <R> R accept(Visitor<R> visitor) {");
+    writer.println("    return visitor.visit" + className + baseName + "(this);");
+    writer.println("}");
 
-        writer.println("/**");
-        writer.println(" * Abstract syntax tree (AST) node definitions for " + baseName + ".");
-        writer.println(" * <p>");
-        writer.println(" * Auto-generated by tool/GenerateAst.java. Do NOT edit manually.");
-        writer.println(" * </p>");
-        writer.println(" */");
+    writer.println("}");
+  }
 
-        writer.println("package io.github.journeycodesayush.javabhailang.parser;");
-        writer.println();
-        // writer.println("import
-        // io.github.journeycodesayush.javabhailang.lexer.Scanner;");
-        writer.println("import io.github.journeycodesayush.javabhailang.lexer.Token;");
+  /**
+   * Generates the Visitor interface for a given base AST class.
+   *
+   * <p>Each concrete AST node implements the accept() method which calls the corresponding visit
+   * method in this interface.
+   *
+   * @param writer the PrintWriter used to write the file
+   * @param baseName the base AST class name
+   * @param types a list of derived AST node definitions
+   */
+  private static void defineVisitor(PrintWriter writer, String baseName, List<String> types) {
+    writer.println("   /**");
+    writer.println("    * Visitor interface for " + baseName + " nodes.");
+    writer.println("    * Each concrete node implements the accept() method.");
+    writer.println("    */");
 
-        writer.println("import java.util.List;");
-        writer.println();
-        writer.println("public abstract class " + baseName + "{");
-
-        defineVisitor(writer, baseName, types);
-
-        // The AST classes
-        for (String type : types) {
-            String className = type.split(":")[0].trim();
-            String fields = type.split(":")[1].trim();
-            defineType(writer, baseName, className, fields);
-        }
-        writer.println();
-        writer.println("    public abstract <R> R accept(Visitor<R> visitor);");
-        writer.println("}");
-        writer.close();
-
+    writer.println("   public interface Visitor<R> {");
+    for (String type : types) {
+      String typeName = type.split(" ")[0].trim();
+      writer.println(
+          "    public R visit"
+              + typeName
+              + baseName
+              + "("
+              + typeName
+              + " "
+              + baseName.toLowerCase()
+              + ");");
     }
-
-    /**
-     * Defines a concrete AST node class inside a base class.
-     * <p>
-     * Generates the class declaration, fields, constructor, and accept() method for
-     * the visitor pattern.
-     * </p>
-     *
-     * @param writer    the PrintWriter used to write the file
-     * @param baseName  the base class name
-     * @param className the concrete AST node class name
-     * @param fieldList a comma-separated list of fields for the class
-     */
-    private static void defineType(PrintWriter writer, String baseName, String className, String fieldList) {
-        writer.println("  public static class " + className + " extends " + baseName + " {");
-
-        // Constructor
-        writer.println("    public " + className + "(" + fieldList + ") {");
-
-        if (!fieldList.isEmpty()) {
-            String[] fields = fieldList.split(", ");
-            for (String field : fields) {
-                String name = field.split((" "))[1];
-                writer.println("     this." + name + " = " + name + ";");
-            }
-
-            writer.println("}");
-            for (String field : fields) {
-                writer.println("     public final " + field + ";");
-            }
-        } else {
-            writer.println("}");
-        }
-
-        writer.println();
-        writer.println("    @Override");
-        writer.println("    public <R> R accept(Visitor<R> visitor) {");
-        writer.println("    return visitor.visit" + className + baseName + "(this);");
-        writer.println("}");
-
-        writer.println("}");
-    }
-
-    /**
-     * Generates the Visitor interface for a given base AST class.
-     * <p>
-     * Each concrete AST node implements the accept() method which calls the
-     * corresponding
-     * visit method in this interface.
-     * </p>
-     *
-     * @param writer   the PrintWriter used to write the file
-     * @param baseName the base AST class name
-     * @param types    a list of derived AST node definitions
-     */
-    private static void defineVisitor(PrintWriter writer, String baseName, List<String> types) {
-        writer.println("   /**");
-        writer.println("    * Visitor interface for " + baseName + " nodes.");
-        writer.println("    * Each concrete node implements the accept() method.");
-        writer.println("    */");
-
-        writer.println("   public interface Visitor<R> {");
-        for (String type : types) {
-            String typeName = type.split(" ")[0].trim();
-            writer.println(
-                    "    public R visit" + typeName + baseName + "(" + typeName + " " + baseName.toLowerCase() + ");");
-        }
-        writer.println("}");
-    }
+    writer.println("}");
+  }
 }
