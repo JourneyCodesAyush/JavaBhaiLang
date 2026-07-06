@@ -56,6 +56,10 @@
                         <googleJavaFormat>
                             <version>1.28.0</version>
                         </googleJavaFormat>
+                        <excludes>
+                            <exclude>**/parser/Expr.java</exclude>
+                            <exclude>**/parser/Stmt.java</exclude>
+                        </excludes>
                     </java>
                 </configuration>
                 <executions>
