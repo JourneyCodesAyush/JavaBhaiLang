@@ -7,6 +7,7 @@
 ![Version](https://img.shields.io/github/v/tag/JourneyCodesAyush/javabhailang?label=version&color=purple)
 ![Status](https://img.shields.io/badge/status-feature--complete-teal)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-lightgrey)
+![CI](https://github.com/JourneyCodesAyush/javabhailang/actions/workflows/ci.yml/badge.svg)
 
 ---
 
@@ -536,6 +537,7 @@ mvn test
 feat(<scope>): add new feature
 fix(<scope>): bug fix
 docs(<scope>): documentation change
+ci(<scope>): CI/CD workflow change
 ```
 
 ---
@@ -547,8 +549,10 @@ Want to contribute to **JavaBhaiLang**? Awesome! Here's a quick guide:
 - **Fork the repo** and work on a separate branch (`feat/feature-name`, `fix/bug-name`)
 - **Keep changes modular**: one feature, bug fix, or improvement per commit
 - **Commit messages**: use **Angular format**: `<type>(<scope>): short description`
-  - **Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
-  - **Scopes:** `interpreter | lexer | parser | tool | examples | docs | tests`
+  - **Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `ci`
+  - **Scopes:** `interpreter | lexer | parser | tool | examples | docs | tests | ci`
+- Run `mvn spotless:apply` to auto-format code before committing
+- Run `mvn verify` (or `mvn test` + `mvn spotless:check`) before submitting a pull request
 - **Test your changes** using `run_bhai_lang.py`
 - If adding new language features, statements, or built-in commands, follow the existing code structure in `src/main/java/io/github/journeycodesayush/JavaBhaiLang/` and test thoroughly with `run_bhai_lang.py`.
 - **Open a Pull Request** with a clear description
